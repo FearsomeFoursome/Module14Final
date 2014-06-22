@@ -1,0 +1,95 @@
+<!--
+****************************************************************************
+*	Author:    Lisa Frye											       *
+*   Filename:  login.html                                                  *
+*   Purpose:   Web form for user to enter email address and password to    *
+*              login for an online olympic store for a class project.      *
+****************************************************************************
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Olympic Store</title>
+  <link rel="stylesheet" type="text/css" href="olympic.css"/>
+  <script type="text/javascript" src="utils.js"> </script>
+
+<script type="text/javascript">
+<!--  // Hide from incompatible browsers
+
+
+function checkReqLogin()
+{
+//resource: http://www.tizag.com/javascriptT/javascript-getelementbyid.php
+ if(document.getElementById('email').value=='')
+    {
+        
+		alert("Please enter your email");
+        document.getElementById('email').focus();
+		return false;
+	}
+    else if(document.getElementById('password').value=='')
+    {   
+			
+        alert("please enter your password");
+        document.getElementById('password').focus();
+		return false;
+	}
+    else
+    {
+		
+        document.form.submit();
+	return true;	
+    }
+
+
+}  // end function checkReqLogin
+// Stop hiding -->  
+</script>
+
+
+</head>
+<body>
+
+<script type="text/javascript">
+	header();
+</script>
+
+<p>
+(Fields in red are required)
+</p>
+
+<h3>Login</h3>
+
+<form method="post" action="login2.html" onsubmit="return checkReqLogin();">
+<fieldset>
+
+	<p>
+	<span class="reqItems">E-mail Address:</span>&nbsp;
+	<input name="email" id="email" size="30" maxlength="50"/>
+	</p>
+
+	<p>
+	<span class="reqItems">Password:</span>&nbsp;
+	<input type="password" id="password" name="password" size="15" maxlength="15"/>
+	</p>
+	
+	<p>
+	<input type="submit" value="Login" id="submit1" name="submit1"/>&nbsp;&nbsp;&nbsp;
+	<input type="reset" value="Reset Form" id="reset1" name="reset1"/>
+	</p>
+
+
+</fieldset>
+</form>
+
+<noscript>
+This page requires JavaScript enabled to function properly!
+</noscript>
+
+<script type="text/javascript">
+	footer();
+</script>
+
+</body>
+</html>

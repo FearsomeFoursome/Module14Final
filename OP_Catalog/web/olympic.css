@@ -1,0 +1,99 @@
+/************************************************************
+ * Author: Lisa Frye                                        *
+ * Filename: olympic.css                                    *
+ * Purpose:  CSS for online olympic store for class project *
+ ************************************************************/
+
+/* set html and body height to 100% so container divs are full page */
+html {
+  height: 100%
+}
+body {
+  height: 100%
+}
+
+/* heading */
+h2 {
+	text-align: center;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: x-large;
+	color: purple
+}
+
+/* smaller heading */
+h3 {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: large;
+	color: blue
+}
+
+/* italicize text */
+.special {
+	font-style: italic;
+}
+
+/* indent left margin */
+.indent {
+	margin-left: 25px
+}
+
+/* for required form items */
+.reqItems {
+	color: red;
+}
+
+/* vertical align table row for links at top */
+.vtop {
+    vertical-align: top;
+}
+
+/* center align */
+.centerit {
+  text-align:center;
+}
+
+table {
+  width: 80%;
+  margin-left: 10%;
+	margin-right: 10%; 
+}
+
+td, th {
+        text-align: center;
+}
+
+#menu {
+    background-color: #FFFF66;
+    text-align: center;
+    float:left;
+    width: 100%;
+    position:relative;
+} 
+
+#content {
+    background-color: #EEEEEE;
+    float:left;
+    width: 100%;
+    position:relative;
+}
+
+#footer {
+  text-align:center;
+  background-color:aqua;
+  clear:both
+}
+
+/* search form */
+#search {
+  display:inline!important;
+  float:right;
+  padding-left: 50px;
+}
+
+/*formatting for field name
+added by Jose Fernandez*/
+.fields
+{
+	color: Black;
+	font: Bold;
+}

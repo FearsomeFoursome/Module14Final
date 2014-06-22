@@ -1,0 +1,206 @@
+<!--
+****************************************************************************
+*	Author:    Lisa Frye											       *
+*   Filename:  createAccount.html                                          *
+*   Purpose:   A web form to allow the user to enter account information   *
+*              to create a new account for an online olympic store for a   *
+*              class project.                                              *
+****************************************************************************
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Olympic Store</title>
+  <link rel="stylesheet" type="text/css" href="olympic.css"/>
+  <script type="text/javascript" src="utils.js"> </script>
+
+<script type="text/javascript">
+<!--  // Hide from incompatible browsers
+
+function listStates()
+{
+ // array of state names to print in DDLB
+ var states = ["Alabama", "Alaska", "American Samoa", "Arizona", "Arkansas", 
+ 		"California", "Colorado", "Connecticut", "Delaware", "District of Columbia", 
+ 		"Florida", "Georgia", "Guam", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", 
+ 		"Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", 
+ 		"Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", 
+ 		"Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", 
+ 		"North Dakota", "Northern Marianas Islands", "Ohio", "Oklahoma", "Oregon", 
+ 		"Pennsylvania", "Puerto Rico", "Rhode Island", "South Carolina", "South Dakota", 
+ 		"Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Virgin Islands", "Washington", 
+ 		"West Virginia", "Wisconsin", "Wyoming"];
+
+ // array of state abbreviations for value of options in DDLB
+ var stateAbbrev = ["AL", "AK", "AS", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FL", "GA", 
+ 		"GU", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", 
+ 		"MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "MP", "OH", "OK", 
+ 		"OR", "PA", "PR", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "VI", "WA", "WV", 
+ 		"WI", "WY"];
+ 
+ for(i in states)
+ {
+    document.write("<option value=\"" + stateAbbrev[i] + "\">" + states[i] + "</option>");
+ }  // end for in
+}  // end function listStates
+
+function checkReqAccount()
+
+{
+if(document.getElementById("fname").value == "") {
+				alert("You must enter a first name.");
+				document.getElementById("fname").focus();
+				return false;
+}
+
+if(document.getElementById("lname").value == "") {
+				alert("You must enter a last name.");
+				document.getElementById("lname").focus();
+				return false;
+}
+
+if(document.getElementById("street").value == "") {
+				alert("You must enter an address.");
+				document.getElementById("street").focus();
+				return false;
+}
+
+if(document.getElementById("city").value == "") {
+				alert("You must enter a city.");
+				document.getElementById("city").focus();
+				return false;
+}
+
+if(document.getElementById("zip").value == "") {
+				alert("You must enter a zip code.");
+				document.getElementById("zip").focus();
+				return false;
+}
+
+if(document.getElementById("email2").value == " ") {
+				alert("You must enter a value for email.");
+				document.getElementById("email2").focus();
+				return false;
+}
+
+if(document.getElementById("email3").value == "") {
+				alert("You must enter a value for email.");
+				document.getElementById("email3").focus();
+				return false;
+}
+
+if(document.getElementById("password2").value == "") {
+				alert("You must enter a password.");
+				document.getElementById("password2").focus();
+				return false;
+}
+
+if(document.getElementById("password3").value == "") {
+				alert("You must enter a password.");
+				document.getElementById("password3").focus();
+				return false;
+}
+return true;
+
+}  // end function checkReqAccount
+
+// Stop hiding -->  
+</script>
+
+
+</head>
+<body>
+
+<script type="text/javascript">
+	header();
+</script>
+
+<p>
+(Fields in red are required)
+</p>
+
+<h3>Create Account</h3>
+
+<form method="post" action="" onsubmit="return checkReqAccount();">
+<fieldset>
+
+	<p>
+	<span class="reqItems">First Name:</span>&nbsp;
+	<input name="fname" id="fname" maxlength="30"/>
+	<br/>
+	
+	<span class="reqItems">Last Name:</span>&nbsp;
+	<input name="lname" id="lname" size="25" maxlength="50"/>
+	</p>
+
+	<p>
+	<span class="reqItems">Street Address:</span>&nbsp;
+	<input name="street" id="street" size="30" maxlength="50"/>
+	<br/>
+
+	Street Address2:&nbsp;
+	<input name="street2" id="street2" size="30" maxlength="50"/>
+	</p>
+	
+	<p>
+	<span class="reqItems">City:</span>&nbsp;
+	<input name="city" id="city" size="30" maxlength="50"/>
+	<br/>
+	
+	<span class="reqItems">State:</span>&nbsp;
+	<select name="state" id="state">
+	  <script type="text/javascript">
+	  <!--
+	     listStates();
+	  -->
+	  </script>
+	</select>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	
+	<span class="reqItems">Zip Code:</span>&nbsp;
+	<input name="zip" id="zip" size="5" maxlength="5"/>
+	</p>
+	
+	<p>
+	Phone:&nbsp;
+	<input name="phone1" id="phone1" size="3" maxlength="3"/>&nbsp;
+	<input name="phone2" id="phone2" size="3" maxlength="3"/>&nbsp;
+	<input name="phone3" id="phone3" size="4" maxlength="4"/>&nbsp;
+	</p>
+	
+	<p>
+	<span class="reqItems">E-mail Address:</span>&nbsp;
+	<input name="email2" id="email2" size="30" maxlength="50"/>
+	<br/>
+	
+	<span class="reqItems">Confirm E-mail Address:</span>&nbsp;
+	<input name="email3" id="email3" size="30" maxlength="50"/>
+	</p>
+	
+	<p>
+	Select a password (minimum of 8 characters)<br/>
+	<span class="reqItems">Password:</span>&nbsp;
+	<input type="password" id="password2" name="password2" size="15" maxlength="15"/>
+	<br/>
+	
+	<span class="reqItems">Confirm password:</span>&nbsp;
+	<input type="password" id="password3" name="password3" size="15" maxlength="15"/>
+	</p>
+	
+	<input type="submit" value="Create Account"/>&nbsp;&nbsp;&nbsp;
+	<input type="reset" value="Reset Form"/>
+
+</fieldset>
+</form>
+
+<noscript>
+This page requires JavaScript enabled to function properly!
+</noscript>
+
+<script type="text/javascript">
+	footer();
+</script>
+
+</body>
+</html>
