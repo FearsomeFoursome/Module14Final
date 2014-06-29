@@ -60,6 +60,11 @@ public class UpdaterGUI extends javax.swing.JFrame {
       });
 
       confirmButton.setText("Confirm Update");
+      confirmButton.addActionListener(new java.awt.event.ActionListener() {
+         public void actionPerformed(java.awt.event.ActionEvent evt) {
+            confirmButtonActionPerformed(evt);
+         }
+      });
 
       jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
       jLabel1.setText("Olympic Pride Products Updater");
@@ -114,8 +119,28 @@ public class UpdaterGUI extends javax.swing.JFrame {
    }//GEN-LAST:event_fileTextFieldActionPerformed
 
    private void quitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitButtonActionPerformed
-      // TODO add your handling code here:
+      System.exit(0);
    }//GEN-LAST:event_quitButtonActionPerformed
+
+   private void confirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmButtonActionPerformed
+      String input = "ID,category,quantity,price,weight,taxable,name,desc,";
+		
+		int startpoint = 0;
+		int currentposition = 0;
+		
+		//outermost is "until end of file" - SQL writes here
+		//next is "until end of line" - save substrings to variable/array here
+		//then "until comma found" - this generates the pointer positions to substring
+		
+		while (input.charAt(currentposition) != ',')
+		{
+			currentposition++;
+		}
+		String item1 = input.substring(startpoint, currentposition);
+		currentposition++;
+		startpoint = currentposition;
+		System.out.println(item1);
+   }//GEN-LAST:event_confirmButtonActionPerformed
 
 	/**
 	 * @param args the command line arguments
