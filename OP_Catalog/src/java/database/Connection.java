@@ -17,6 +17,8 @@ public class Connection {
 	private static final String SQLconnectionUrl = "jdbc:sqlserver://localhost";
 	private static final String SQLusername = "sa";
 	private static final String SQLpassword = "password";
+	private static java.sql.ResultSet rs = null;
+	private static java.sql.Statement stmt = null;
 
 	/**
 	 * Retrieves the SQL connection.
@@ -39,11 +41,38 @@ public class Connection {
 	}
     
         
-        /**
-         * Method to close the SQL connection.
-         */
-        public static void closeSQLConn() {
-            
-        }
+	  /**
+		* Method to close the SQL connection.
+		*/
+	  public static void closeSQLConn() {
+		//three try-catch blocks to ensure clean error handling
+		try
+		{
+			if (stmt != null)
+				stmt.close();
+		} //end try
+		catch (java.sql.SQLException e)
+		{
+			System.err.println(e);
+		} //end catch	
+		try
+		{
+			if (rs!= null)
+				rs.close();
+		} //end try
+		catch (java.sql.SQLException e)
+		{
+			System.err.println(e);
+		} //end catch
+		try
+		{
+			if(sqlConn != null)
+				sqlConn.close();
+		} //end try
+		catch (java.sql.SQLException e)
+		{
+			System.err.println(e);
+		} //end catch	
+	} //end SQLdisconnect
 }
 
