@@ -4,19 +4,13 @@
  *
  * Class to handle establishing database connections
  */
-package Control;
+package database;
 
 /**
  * This class includes methods to establish SQL and MySQL database connections.
- * @author Bella Belova
+ * @author Bella Belova; modified by Scott Young
  */
-public class CommonConnection {
-
-	private static final String MYSQLjdbcDriver = "com.mysql.jdbc.Driver";
-	private static final String MYSQLconnectionUrl = "jdbc:mysql://oak.safesecureweb.com:3306/nianbrandsco?zeroDateTimeBehavior=convertToNull";
-	private static final String MYSQLusername = "store";
-	private static final String MYSQLpassword = "testDB1234!";
-	private static java.sql.Connection mysqlConn;
+public class Connection {
 
 	private static java.sql.Connection sqlConn = null;
 	private static final String SQLjdbcDriver = "com.microsoft.sqlserver.jdbc.SQLServerDriver"; 
@@ -31,27 +25,7 @@ public class CommonConnection {
 	public  static  java.sql.Connection getSQLConn()
 	{
 		return sqlConn;
-	}
-	
-	/**
-	 * Retrieves the MySQL connection.
-	 * @return A pointer to the currently open MySQL connection.
-	 */
-	public static java.sql.Connection getMSQLConn()
-	{
-		return mysqlConn;
-	}    
-
-	/**
-	 * Initializes the MySQL connection.
-	 */
-	public static void initialize_Connection_MYSQL()
-	{
-
-		try{
-			mysqlConn = java.sql.DriverManager.getConnection(MYSQLconnectionUrl,MYSQLusername, MYSQLpassword);                
-		} catch (java.sql.SQLException e){System.err.println(e); }
-	}
+	}  
 	
 	/**
 	 * Initializes the SQL connection.
@@ -63,5 +37,13 @@ public class CommonConnection {
 			sqlConn = java.sql.DriverManager.getConnection(SQLconnectionUrl,SQLusername, SQLpassword);
 		} catch (java.sql.SQLException e){System.err.println(e); }
 	}
+    
+        
+        /**
+         * Method to close the SQL connection.
+         */
+        public static void closeSQLConn() {
+            
+        }
 }
 
