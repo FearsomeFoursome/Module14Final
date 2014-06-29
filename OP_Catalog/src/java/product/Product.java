@@ -5,7 +5,7 @@
  * AR / BB / SY
  */
 
-package classes;
+package product;
 
 /**
  *
@@ -19,7 +19,7 @@ public class Product {
     private String longDesc;
     private float prodWeight;
     private float prodPrice;
-    private char taxable;
+    private boolean taxable;
     
     /************************************************************************** 
     CONSTRUCTORS
@@ -37,7 +37,7 @@ public class Product {
         longDesc = "";
         prodWeight = 0.0f;
         prodPrice = 0.0f;
-        taxable = '\u0000';
+        taxable = false;
     }
     /**
      * A constructor to create a product object with designated values.
@@ -46,11 +46,11 @@ public class Product {
      * @param pName The name of the product.
      * @param sQty The current stock quantity of the product.
      * @param lDesc The long description of the product (i.e. color, size, design, details).
-     * @param pWeight The weight of the product.
-     * @param pPrice The price of the product.
-     * @param tax A single character to register the product as taxable (Y) or not taxable (N).
+     * @param pWeight The weight of the product in ounces.
+     * @param pPrice The price of the product in U.S. dollars.
+     * @param tax A boolean designation for product being taxable (true) or not taxable (false).
      */
-    public Product(int pID, int catID, String pName, int sQty, String lDesc, float pWeight, float pPrice, char tax) {
+    public Product(int pID, int catID, String pName, int sQty, String lDesc, float pWeight, float pPrice, boolean tax) {
         prodID = pID;
         categoryID = catID;
         prodName = pName;
@@ -68,7 +68,7 @@ public class Product {
     * Retrieves the product ID.
     * @return The unique identifier of the product.
     */ 
-   public int getProductID(){ return prodID; }
+   public int getProdID(){ return prodID; }
    
    /**
     * Retrieves the category ID.
@@ -80,13 +80,13 @@ public class Product {
     * Retrieves the product name.
     * @return The name of the product.
     */
-   public String getProductName() { return prodName; }
+   public String getProdName() { return prodName; }
    
    /**
     * Retrieves the stock quantity.
     * @return The current stock quantity of the product.
     */
-   public int getStockQuantity() { return stockQty; }
+   public int getStockQty() { return stockQty; }
    
    /**
     * Retrieves the long description of the product (i.e. size, design, color).
@@ -95,22 +95,22 @@ public class Product {
    public String getLongDesc() { return longDesc; }
    
    /**
-    * Retrieves the product weight.
-    * @return The weight of the product.
+    * Retrieves the product weight in ounces.
+    * @return The weight of the product in ounces.
     */
-   public float getProductWeight() { return prodWeight; }
+   public float getProdWeight() { return prodWeight; }
    
    /**
-    * Retrieves the product price.
-    * @return The price of the product.
+    * Retrieves the product price in U.S. dollars.
+    * @return The price of the product in U.S. dollars.
     */
-   public float getProductPrice() { return prodPrice; }
+   public float getProdPrice() { return prodPrice; }
    
    /**
-    * Retrieves the taxable designation (Y= yes, N= no).
-    * @return A single character to register the product as taxable (Y) or not taxable (N).
+    * Retrieves the taxable designation (true= yes, false= no).
+    * @return A boolean designation to declare the product as taxable (true) or not taxable (false).
     */
-   public char getTaxable() { return taxable; } 
+   public boolean getTaxable() { return taxable; } 
     
    /***************************************************************************
    SET METHODS
@@ -119,7 +119,7 @@ public class Product {
     * Sets of changes the product's ID.
     * @param pID The unique integer to identify the product.
     */
-   public void setProductID(int pID) { prodID = pID; }
+   public void setProdID(int pID) { prodID = pID; }
    
    /**
     * Sets of changes the product's category ID.
@@ -131,13 +131,13 @@ public class Product {
     * Sets or changes the product's name.
     * @param pName The name of the product.
     */
-   public void setProductName(String pName) { prodName = pName; }
+   public void setProdName(String pName) { prodName = pName; }
    
    /**
     * Sets or changes the product's stock quantity.
     * @param sQty The current stock quantity of the product.
     */
-   public void setStockQuantity(int sQty) { stockQty = sQty; }
+   public void setStockQty(int sQty) { stockQty = sQty; }
    
    /**
     * Sets of changes the product's description.
@@ -146,21 +146,21 @@ public class Product {
    public void setLongDesc(String lDesc) { longDesc = lDesc; }
    
    /**
-    * Sets or changes the product's weight.
-    * @param pWeight The weight of the product.
+    * Sets or changes the product's weight in ounces.
+    * @param pWeight The weight of the product in ounces.
     */
-   public void setProductWeight(float pWeight) { prodWeight = pWeight; }
+   public void setProdWeight(float pWeight) { prodWeight = pWeight; }
    
    /**
-    * Sets of changes the product's price.
-    * @param pPrice The price of the product.
+    * Sets of changes the product's price in U.S. dollars.
+    * @param pPrice The price of the product in U.S. dollars.
     */
-   public void setProductPrice(float pPrice) { prodPrice = pPrice; }
+   public void setProdPrice(float pPrice) { prodPrice = pPrice; }
    
    /**
-    * Sets or changes the single character designation of the product's taxability (Y= yes, N= no).
-    * @param tax A single character to register the product as taxable (Y) or not taxable (N).
+    * Sets or changes the boolean designation of the product's taxability (true= yes, false= no).
+    * @param tax A boolean designation to register true or false.
     */
-   public void setTaxable(char tax) { taxable = tax; }
+   public void setTaxable(boolean tax) { taxable = tax; }
    
 }
