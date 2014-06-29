@@ -123,23 +123,42 @@ public class UpdaterGUI extends javax.swing.JFrame {
    }//GEN-LAST:event_quitButtonActionPerformed
 
    private void confirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmButtonActionPerformed
-      String input = "ID,category,quantity,price,weight,taxable,name,desc,";
+      String input = "ID,category,/nblah,/n";
 		
 		int startpoint = 0;
 		int currentposition = 0;
+		String item;
 		
 		//outermost is "until end of file" - SQL writes here
 		//next is "until end of line" - save substrings to variable/array here
 		//then "until comma found" - this generates the pointer positions to substring
-		
-		while (input.charAt(currentposition) != ',')
+		while(currentposition < input.length())
 		{
-			currentposition++;
-		}
-		String item1 = input.substring(startpoint, currentposition);
-		currentposition++;
-		startpoint = currentposition;
-		System.out.println(item1);
+			while(currentposition < (input.length() - 1) && input.charAt(currentposition) != '/')
+			{
+				while (currentposition < input.length() && input.charAt(currentposition) != ',')
+				{
+					currentposition++;
+				} //end comma-finding loop
+				
+				//save substrings to variables/array/something
+				//saving to single variable and printing for debug now
+				item = input.substring(startpoint, currentposition);
+				currentposition++;
+				startpoint = currentposition;
+				System.out.println(item);
+			} //end newline-finding loop
+			
+			if (currentposition < (input.length()))
+			{
+				currentposition = currentposition + 2;
+				startpoint = currentposition;			
+			} //end if which handles skipping newlines
+			
+			//write SQL insert here
+			
+		} //end file-end finding loop
+	
    }//GEN-LAST:event_confirmButtonActionPerformed
 
 	/**
