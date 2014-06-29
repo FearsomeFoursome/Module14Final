@@ -14,16 +14,21 @@ import java.util.ArrayList;
  * @author Scott Young
  */
 public class ProductList {
-    private ArrayList prodList; 
+    private ArrayList<Product> prodList; 
     
     
 
     public ProductList() {
-        prodList = new ArrayList[Product];
+        prodList = new ArrayList<Product>();
     }
     
-    public void setProdList(Product pList) {
+    public void setProdList(ArrayList<Product> pList) {
         prodList = pList;
     }
+	 
+	 public ArrayList<Product> getProdList()
+	 {
+		 return prodList;
+	 }
     
 }
