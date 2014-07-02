@@ -24,8 +24,7 @@ public class Connection {
 	 * Retrieves the SQL connection.
 	 * @return A pointer to the currently open SQL connection.
 	 */
-	public  static  java.sql.Connection getSQLConn()
-	{
+	public  static  java.sql.Connection getSQLConn() {
 		return sqlConn;
 	}  
 	
@@ -34,44 +33,37 @@ public class Connection {
 	 */
 	public static void initialize_Connection_SQL() 
 	{      
-
-		try{
-			sqlConn = java.sql.DriverManager.getConnection(SQLconnectionUrl,SQLusername, SQLpassword);
+            try{
+		sqlConn = java.sql.DriverManager.getConnection(SQLconnectionUrl,SQLusername, SQLpassword);
 		} catch (java.sql.SQLException e){System.err.println(e); }
 	}
     
         
-	  /**
-		* Method to close the SQL connection.
-		*/
-	  public static void closeSQLConn() {
-		//three try-catch blocks to ensure clean error handling
-		try
-		{
-			if (stmt != null)
-				stmt.close();
+	/**
+	* Method to close the SQL connection.
+	*/
+	public static void closeSQLConn() {
+            //three try-catch blocks to ensure clean error handling
+            try {
+		if (stmt != null)
+                    stmt.close();
 		} //end try
-		catch (java.sql.SQLException e)
-		{
-			System.err.println(e);
+		catch (java.sql.SQLException e) {
+                    System.err.println(e);
 		} //end catch	
-		try
-		{
-			if (rs!= null)
-				rs.close();
+		try {
+		if (rs!= null)
+                    rs.close();
 		} //end try
-		catch (java.sql.SQLException e)
-		{
-			System.err.println(e);
+		catch (java.sql.SQLException e) {
+                    System.err.println(e);
 		} //end catch
-		try
-		{
-			if(sqlConn != null)
-				sqlConn.close();
+		try {
+                    if(sqlConn != null)
+			sqlConn.close();
 		} //end try
-		catch (java.sql.SQLException e)
-		{
-			System.err.println(e);
+		catch (java.sql.SQLException e) {
+                    System.err.println(e);
 		} //end catch	
 	} //end SQLdisconnect
 }
