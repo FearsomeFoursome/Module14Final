@@ -14,21 +14,24 @@ import java.util.ArrayList;
  * @author Scott Young
  */
 public class ProductList {
+    // Assign product array list instance variable:
     private ArrayList<Product> prodList; 
+       
+    /**
+     * Default constructor to create a new product list object.
+     */
+    public ProductList() { prodList = new ArrayList<Product>(); }
     
-    
-
-    public ProductList() {
-        prodList = new ArrayList<Product>();
-    }
-    
-    public void setProdList(ArrayList<Product> pList) {
-        prodList = pList;
-    }
-	 
-	 public ArrayList<Product> getProdList()
-	 {
-		 return prodList;
-	 }
+    /**
+     * Method to set or change a product list object.
+     * @param pList An array list of products.
+     */
+    public void setProdList(ArrayList<Product> pList) { prodList = pList; }
+	
+    /**
+     * Retrieve product list.
+     * @return An array list of products.
+     */
+    public ArrayList<Product> getProdList(){ return prodList; }
     
 }
