@@ -49,7 +49,7 @@ public class ProductUpdater extends HttpServlet {
 			
 			//parse the first line and save it to an array
 			String temp = reader.readLine();
-			if (temp.contains("where") || temp.contains("drop") || temp.contains("select"))
+			if (temp.contains(";") || temp.contains("where") || temp.contains("drop") || temp.contains("select"))
 			{
 				dataerrors++;
 				String columns[] = {"PROD_ID","CATEGORY_ID","STOCK_QTY","PROD_PRICE","PROD_WEIGHT","TAXABLE","PROD_NAME","LONG_DESC"};
@@ -62,7 +62,7 @@ public class ProductUpdater extends HttpServlet {
 			//now parse the rest and save them
 			while ((line = reader.readLine()) != null)
 			{
-				if (line.contains("where") || line.contains("drop") || line.contains("select"))
+				if (line.contains(";") || line.contains("where") || line.contains("drop") || line.contains("select"))
 				{
 					dataerrors++;
 					linefailures++;
