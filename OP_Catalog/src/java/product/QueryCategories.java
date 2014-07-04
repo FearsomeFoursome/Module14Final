@@ -23,18 +23,14 @@ import javax.servlet.http.HttpSession;
  */
 public class QueryCategories extends HttpServlet {
         static final String CATEGORY_TABLE_NAME = "CATEGORY";
-        private java.sql.Connection sqlConn;
-	public class TableException extends Exception{
-		TableException(String s){
-			super(s);
-		}        
+        private java.sql.Connection sqlConn;   
     
     /**
      * Query to get categories from the database.
      * @return A category list (array list) of category objects.
      * @throws Exception java.sql.SQLException.
      */
-    public CategoryList getCategories() throws Exception {
+    public CategoryList getCategories() {
         java.sql.Statement stmt;
         CategoryList results = null;
         java.util.ArrayList catObjects;
@@ -48,8 +44,8 @@ public class QueryCategories extends HttpServlet {
           results = new product.CategoryList();
           while (rs.next() == true)
             catObjects.add(new product.Category(rs.getInt("CATEGORY_ID"), rs.getString("CAT_NAME")));   
-        } catch (java.sql.SQLException e){
-		throw new TableException("Unable to create requested Category object." + "\nDetail: " + e);
+        } catch (java.sql.SQLException e) {
+		System.out.println("Unable to create requested Category object." + "\nDetail: " + e);
 		}
 	results.setCatList(catObjects);
         return results;
