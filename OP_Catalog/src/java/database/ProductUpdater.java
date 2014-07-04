@@ -7,9 +7,12 @@
 package database;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.sql.Statement;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -41,22 +44,22 @@ public class ProductUpdater extends HttpServlet {
 			int sqlerrors = 0;
 			int dataerrors = 0;
 			String line;
+			String columns[] = {"PROD_ID","CATEGORY_ID","STOCK_QTY","PROD_PRICE","PROD_WEIGHT","TAXABLE","PROD_NAME","LONG_DESC"};
 			
-			//write a function which dumps an array of strings to SQL and returns a boolean
-			//true if no errors, false if errors
-			
-			BufferedReader reader = new BufferedReader(new FileReader("backup.csv"));
-			
+			ServletContext context = getServletContext();
+			InputStream input = context.getResourceAsStream("/WEB-INF/backup.csv");
+			InputStreamReader ireader = new InputStreamReader(input);
+			BufferedReader reader = new BufferedReader(ireader);
+						
 			//parse the first line and save it to an array
 			String temp = reader.readLine();
 			if (temp.contains(";") || temp.contains("where") || temp.contains("drop") || temp.contains("select"))
 			{
 				dataerrors++;
-				String columns[] = {"PROD_ID","CATEGORY_ID","STOCK_QTY","PROD_PRICE","PROD_WEIGHT","TAXABLE","PROD_NAME","LONG_DESC"};
 			} //end if to check for SQL injection
 			else
 			{
-				String columns[] = temp.split(",");
+				columns = temp.split(",", -1);
 			} //end else when no SQL injection found
 		
 			//now parse the rest and save them
@@ -69,10 +72,21 @@ public class ProductUpdater extends HttpServlet {
 				} //end if to check for SQL injection
 				else
 				{
-					String items[] = line.split(",");
-					//pass this to SQL
-					//save the returned boolean somewhere
-					//increment error values or linesuccess as appropriate
+					String items[] = line.split(",", -1);
+					
+					//pass this to SQL and save the returned boolean
+					boolean sqlfailures = savetodatabase(columns, items);
+					
+					if (sqlfailures == true)
+					{
+						sqlerrors++;
+						linefailures++;
+					}
+					else
+					{
+						linesuccesses++;
+					}				
+
 				} //end else when no SQL injection found
 
 			} //end while loop to parse the file
@@ -84,11 +98,61 @@ public class ProductUpdater extends HttpServlet {
 			out.println("</head>");
 			out.println("<body>");
 			out.println("<h1>Servlet ProductUpdater at " + request.getContextPath() + "</h1>");
+			out.println(linesuccesses + " lines successfully written.<br>");
+			out.println(linefailures + " lines failed to write.<br>");
+			out.println(sqlerrors + " lines caused SQL failures.<br>");
+			out.println(dataerrors + " lines contained invalid data and were not written.<br>");
 			out.println("</body>");
 			out.println("</html>");
 		}
 	}
-
+	
+	//write a function which dumps an array of strings to SQL and returns a boolean
+	//false if no errors, true if errors
+	boolean savetodatabase(String columns[], String items[])
+	{
+		boolean errorfound = false;
+		String builtstatement;
+		Statement stmt = null;
+		java.sql.Connection conn = null;
+		try
+		{
+			//get a connection
+			Connection.initialize_Connection_SQL();
+			conn = Connection.getSQLConn();
+			
+			//build the SQL statement using the variables passed in
+			builtstatement = "insert into Product (" + "PROD_ID, CATEGORY_ID, "
+					  + "STOCK_QTY, PROD_PRICE, PROD_WEIGHT, TAXABLE, PROD_NAME, LONG_DESC"
+					  + ") values(" + items[0] + ", " + items[1] + ", " + items[2]
+					  + ", " + items[3] + ", " + items[4] + ", " + items[5] + ", '"
+					  + items[6] + "', '" + items[7] + "');";
+			
+			//send the SQL statement to SQL
+			stmt = conn.createStatement();
+			stmt.executeUpdate(builtstatement);
+		} //end try
+		catch (Exception e)
+		{
+			System.err.println(e);
+			errorfound = true;
+		} //end catch
+		//close connections and statement
+		Connection.closeSQLConn();
+		try
+		{
+			if(stmt != null)
+			{
+				stmt.close();
+			}
+		} //end try
+		catch (Exception e)
+		{
+			System.err.println(e);
+		} //end catch
+		return errorfound;
+	} //end savetodatabase method
+	
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 	/**
 	 * Handles the HTTP <code>GET</code> method.
