@@ -5,6 +5,8 @@
         <data xmlns="http://www.netbeans.org/ns/web-project/3">
             <name>OP_Catalog</name>
             <minimum-ant-version>1.6.5</minimum-ant-version>
+            <explicit-platform explicit-source-supported="true"/>
+            <web-module-libraries/>
             <web-module-libraries>
                 <library dirs="200">
                     <file>${file.reference.sqljdbc4.jar}</file>

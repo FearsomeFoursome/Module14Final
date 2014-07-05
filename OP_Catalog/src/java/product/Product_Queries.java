@@ -57,6 +57,7 @@ public class Product_Queries {
           {
                 product[index++] = new Product(rs.getInt("PROD_ID"), rs.getInt("CATEGORY_ID"), rs.getString("PROD_NAME"), 
                         rs.getInt("STOCK_QTY"),  rs.getString("LONG_DESC"), rs.getFloat("PROD_WEIGHT"), rs.getFloat("PROD_PRICE"), rs.getBoolean("TAXABLE"));
+                
           }  
           max_index = index;        //maximum size of array
         }catch (java.sql.SQLException e){
