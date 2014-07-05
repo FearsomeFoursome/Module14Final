@@ -46,7 +46,7 @@ public class SearchProduct {
             product[index] = new Product();
         }
     }
-    
+
    // User search by Product ID
     public void setProductID(String prod_id)
     {
@@ -82,7 +82,7 @@ public class SearchProduct {
     }
    
     // User enter characters for search. Search by Product Description
-    public void getDataFromTable() throws TableException
+    public void getDataFromTable() throws TableException 
     {
         if(letter == true)
         {
@@ -100,6 +100,7 @@ public class SearchProduct {
            descr[index] = product[index].getProdName();
            price[index] = product[index].getProdPrice();
            qty[index] = product[index].getStockQty();            
+           System.out.println(qty);
         }
     }
     

@@ -14,7 +14,7 @@ public class Connection {
 
 	private static java.sql.Connection sqlConn = null;
 	private static final String SQLjdbcDriver = "com.microsoft.sqlserver.jdbc.SQLServerDriver"; 
-	private static final String SQLconnectionUrl = "jdbc:sqlserver://localhost";
+	private static final String SQLconnectionUrl = "jdbc:sqlserver://localhost:1433;databaseName=OlympicStore";
 	private static final String SQLusername = "sa";
 	private static final String SQLpassword = "password";
 	private static java.sql.ResultSet rs = null;
