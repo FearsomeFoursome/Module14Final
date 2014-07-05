@@ -35,12 +35,12 @@ public class QueryCategories extends HttpServlet {
         CategoryList results = null;
         java.util.ArrayList catObjects;
         java.sql.ResultSet rs;
+		  catObjects = new java.util.ArrayList(); 
         
         try{
           String createString = "select * from " + CATEGORY_TABLE_NAME + ";";                
           stmt = sqlConn.createStatement();
-          rs = stmt.executeQuery(createString);
-          catObjects = new java.util.ArrayList();          
+          rs = stmt.executeQuery(createString);                   
           results = new product.CategoryList();
           while (rs.next() == true)
             catObjects.add(new product.Category(rs.getInt("CATEGORY_ID"), rs.getString("CAT_NAME")));   
@@ -62,7 +62,7 @@ public class QueryCategories extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, Exception {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         String url = "/response.jsp";
@@ -112,7 +112,7 @@ public class QueryCategories extends HttpServlet {
             out.close();
         }
     }
- }
+ 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
