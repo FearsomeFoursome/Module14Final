@@ -44,6 +44,8 @@ public class ProductUpdater extends HttpServlet {
 			int sqlerrors = 0;
 			int dataerrors = 0;
 			String line;
+			
+			//initialize column header array to defaults
 			String columns[] = {"PROD_ID","CATEGORY_ID","STOCK_QTY","PROD_PRICE","PROD_WEIGHT","TAXABLE","PROD_NAME","LONG_DESC"};
 			
 			ServletContext context = getServletContext();
@@ -72,12 +74,15 @@ public class ProductUpdater extends HttpServlet {
 				} //end if to check for SQL injection
 				else
 				{
+					//replace single quotes with escaped single quotes so SQL doesn't blow up
+					line = line.replace("'", "''");
+
 					String items[] = line.split(",", -1);
 					
 					//pass this to SQL and save the returned boolean
-					boolean sqlfailures = savetodatabase(columns, items);
+					boolean sqlfailed = savetodatabase(columns, items);
 					
-					if (sqlfailures == true)
+					if (sqlfailed == true)
 					{
 						sqlerrors++;
 						linefailures++;
@@ -109,27 +114,56 @@ public class ProductUpdater extends HttpServlet {
 	
 	//write a function which dumps an array of strings to SQL and returns a boolean
 	//false if no errors, true if errors
+	//the columns array must start with product ID
 	boolean savetodatabase(String columns[], String items[])
 	{
 		boolean errorfound = false;
 		String builtstatement;
 		Statement stmt = null;
 		java.sql.Connection conn = null;
+		java.sql.ResultSet rs = null;
 		try
 		{
 			//get a connection
 			Connection.initialize_Connection_SQL();
 			conn = Connection.getSQLConn();
 			
-			//build the SQL statement using the variables passed in
-			builtstatement = "insert into Product (" + "PROD_ID, CATEGORY_ID, "
-					  + "STOCK_QTY, PROD_PRICE, PROD_WEIGHT, TAXABLE, PROD_NAME, LONG_DESC"
-					  + ") values(" + items[0] + ", " + items[1] + ", " + items[2]
-					  + ", " + items[3] + ", " + items[4] + ", " + items[5] + ", '"
-					  + items[6] + "', '" + items[7] + "');";
+			//check to see if a line already exists with the primary key
+			builtstatement = "select * from Product where " + columns[0]
+					  + " = " + items[0] + ";";
 			
-			//send the SQL statement to SQL
 			stmt = conn.createStatement();
+			rs = stmt.executeQuery(builtstatement);
+			
+			//check to see if the resultset has data - while loop and boolean check
+			//from Adam Hardy at http://www.coderanch.com/t/296373/JDBC/databases/check-Result-set-null
+			boolean rshasdata = false;
+			while (rs.next())
+			{
+				rshasdata = true;
+			}
+			
+			if (rshasdata)
+			{
+				//build an update statement to overwrite database data with backup file data
+				builtstatement = "update Product set " + columns[1] + " = '" + items[1]
+						  + "', " + columns[2] + " = '" + items[2] + "', " + columns[3] + " = '" + items[3]
+						  + "', " + columns[4] + " = '" + items[4] + "', " + columns[5] + " = '" + items[5]
+						  + "', " + columns[6] + " = '" + items[6] + "', " + columns[7] + " = '" + items[7]
+						  + "' where " + columns[0] + " = " + items[0];
+			}
+			else
+			{
+				//insert a new product row
+				builtstatement = "insert into Product (" + columns[0] + ", " + columns[1]
+						  + ", " + columns[2] + ", " + columns[3] + ", " + columns[4]
+						  + ", " + columns[5] + ", " + columns[6] + ", " + columns[7]
+						  + ") values('" + items[0] + "', '" + items[1] + "', '" + items[2]
+						  + "', '" + items[3] + "', '" + items[4] + "', '" + items[5] + "', '"
+						  + items[6] + "', '" + items[7] + "');";
+			}		
+						
+			//send the SQL statement to SQL
 			stmt.executeUpdate(builtstatement);
 		} //end try
 		catch (Exception e)

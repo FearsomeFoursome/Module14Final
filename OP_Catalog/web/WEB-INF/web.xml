@@ -7,10 +7,12 @@
     <servlet-mapping>
         <servlet-name>QueryCategories</servlet-name>
         <url-pattern>/QueryCategories</url-pattern>
+	 </servlet-mapping>
+	 <servlet>
         <servlet-name>ProductUpdater</servlet-name>
         <servlet-class>database.ProductUpdater</servlet-class>
-    </servlet>
-    <servlet-mapping>
+	 </servlet>
+	 <servlet-mapping>
         <servlet-name>ProductUpdater</servlet-name>
         <url-pattern>/ProductUpdater</url-pattern>
     </servlet-mapping>
