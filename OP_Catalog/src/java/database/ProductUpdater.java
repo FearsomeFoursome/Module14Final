@@ -58,7 +58,7 @@ public class ProductUpdater extends HttpServlet {
 			if (temp.contains(";") || temp.contains("where") || temp.contains("drop") || temp.contains("select"))
 			{
 				dataerrors++;
-			} //end if to check for SQL injection
+			} //end if to check for SQL injection; default column headers used
 			else
 			{
 				columns = temp.split(",", -1);
@@ -96,25 +96,35 @@ public class ProductUpdater extends HttpServlet {
 
 			} //end while loop to parse the file
 			
-			out.println("<!DOCTYPE html>");
-			out.println("<html>");
+			out.println("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\"\n" +
+							"\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">");
+			out.println("<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">");
 			out.println("<head>");
-			out.println("<title>Servlet ProductUpdater</title>");			
+			out.println("<title>Olympic Pride</title>");
+			out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"olympic.css\"/>");
+			out.println("<script type=\"text/javascript\" src=\"utils.js\"> </script>");
 			out.println("</head>");
 			out.println("<body>");
-			out.println("<h1>Servlet ProductUpdater at " + request.getContextPath() + "</h1>");
+			out.println("<script type=\"text/javascript\">");
+			out.println("header();");
+			out.println("</script>");
+			out.println("<h1>Database Restoration Complete</h1>");
 			out.println(linesuccesses + " lines successfully written.<br>");
 			out.println(linefailures + " lines failed to write.<br>");
 			out.println(sqlerrors + " lines caused SQL failures.<br>");
-			out.println(dataerrors + " lines contained invalid data and were not written.<br>");
+			out.println(dataerrors + " lines contained invalid data and were not written.<br><br><br>");
+			out.println("<script type=\"text/javascript\">");
+			out.println("footer();");
+			out.println("</script>");
 			out.println("</body>");
 			out.println("</html>");
 		}
 	}
 	
-	//write a function which dumps an array of strings to SQL and returns a boolean
-	//false if no errors, true if errors
-	//the columns array must start with product ID
+	//Saves the array of items into the columns named in the columns array.
+	//Boolean returned is true if an error is encountered, or false if no errors.
+	//Limitations: columns[] must contain exact matches to the columns of the Product table.
+	//Columns[0] and items[0] must be Prod_ID and the product ID number.
 	boolean savetodatabase(String columns[], String items[])
 	{
 		boolean errorfound = false;
