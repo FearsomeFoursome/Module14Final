@@ -51,7 +51,7 @@ public class QueryByCatID extends HttpServlet {
           Connection.closeSQLConn();
           stmt.close();         
         } catch (java.sql.SQLException e) {
-		System.out.println("Unable to create requested Product object." + "\nDetail: " + e);
+		System.err.println("Unable to create requested Product object." + "\nDetail: " + e);
 		}
 	results.setProdList(prodObjects);
         return results;

@@ -47,7 +47,7 @@ public class QueryCategories extends HttpServlet {
           Connection.closeSQLConn();
           stmt.close();        
         } catch (java.sql.SQLException e) {
-		System.out.println("Unable to create requested Category object." + "\nDetail: " + e);
+		System.err.println("Unable to create requested Category object." + "\nDetail: " + e);
 		}
 	results.setCatList(catObjects);
         return results;
