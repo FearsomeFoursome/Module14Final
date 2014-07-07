@@ -29,6 +29,8 @@ public class QueryCategories extends HttpServlet {
      * @return A category list (array list) of category objects.
      */
     public CategoryList getCategories() {
+        Connection.initialize_Connection_SQL();
+        sqlConn = Connection.getSQLConn();
         java.sql.Statement stmt;
         CategoryList results = null;
         java.util.ArrayList catObjects;
@@ -42,6 +44,8 @@ public class QueryCategories extends HttpServlet {
           results = new product.CategoryList();
           while (rs.next() == true)
             catObjects.add(new product.Category(rs.getInt("CATEGORY_ID"), rs.getString("CAT_NAME")));   
+          Connection.closeSQLConn();
+          stmt.close();        
         } catch (java.sql.SQLException e) {
 		System.out.println("Unable to create requested Category object." + "\nDetail: " + e);
 		}
@@ -65,34 +69,12 @@ public class QueryCategories extends HttpServlet {
         PrintWriter out = response.getWriter();
         String url = "/displayCategories.jsp";
                 
-        try {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet QueryCategories</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            
-            out.println("<h1>Please choose a product category: </h1>");
-            
-            // initialize db connection
-            Connection.initialize_Connection_SQL();            
-            
+        try {                   
             // create the category list object
-            CategoryList c1 = new CategoryList();
-            
-            // get the sql connection
-            Connection.getSQLConn();
+            CategoryList c1 = new CategoryList();         
             
             // query the db for the category names & ID's, return category list object
-            getCategories();
-            
-            // close the sql connection
-            Connection.closeSQLConn();
-            
-            // retrieve the category list
-            c1.getCatList();
+            c1 = getCategories();
             
             // set the attributes for category list object
             request.setAttribute("catlist", c1);
@@ -100,9 +82,7 @@ public class QueryCategories extends HttpServlet {
             // forward request and response to JSP page for display to user
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
             dispatcher.forward(request, response);              
-            
-            out.println("</body>");
-            out.println("</html>");
+
         } finally {
             out.close();
         }
