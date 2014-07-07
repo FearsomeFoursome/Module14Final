@@ -15,7 +15,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -31,11 +30,13 @@ public class QueryByCatID extends HttpServlet {
      * @return An array list of product objects.
      */    
     public ProductList getProductsbyCatID(String catID) {
+        Connection.initialize_Connection_SQL();
+        sqlConn = Connection.getSQLConn();
         java.sql.Statement stmt;
         ProductList results = null;
         java.util.ArrayList prodObjects;
         java.sql.ResultSet rs;
-		  prodObjects = new java.util.ArrayList(); 
+	prodObjects = new java.util.ArrayList(); 
         
         try{
           String createString = "select * from " + PRODUCT_TABLE_NAME +
@@ -47,8 +48,10 @@ public class QueryByCatID extends HttpServlet {
             prodObjects.add(new product.Product(rs. getInt("PROD_ID"), rs.getInt("CATEGORY_ID"), 
                     rs.getString("PROD_NAME"), rs.getInt("STOCK_QTY"), rs.getString("LONG_DESC"),
                     rs.getFloat("PROD_WEIGHT"), rs.getFloat("PROD_PRICE"), rs.getBoolean("TAXABLE")));   
+          Connection.closeSQLConn();
+          stmt.close();         
         } catch (java.sql.SQLException e) {
-		System.out.println("Unable to create requested Product object." + "\nDetail: " + e);
+		System.err.println("Unable to create requested Product object." + "\nDetail: " + e);
 		}
 	results.setProdList(prodObjects);
         return results;
@@ -68,7 +71,7 @@ public class QueryByCatID extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        String url = "/response.jsp";
+        String url = "/DisplayProductsbyCatID.jsp";
         
         try {
             /* TODO output your page here. You may use following sample code. */
@@ -90,23 +93,11 @@ public class QueryByCatID extends HttpServlet {
             // UPDATE INPUT PARAMETER TO MATCH HREF ONCE UPDATED IN HTML!!!!
             String prodCat = request.getParameter("****HREF LINK SELECTION BY USER*****");
             
-            // Establish the SQL connection:
-            Connection.getSQLConn();
-            
             // Search the Product DB by Category ID selection of the user:
-            getProductsbyCatID(prodCat);
-            
-            // Close the SQL connection:
-            Connection.closeSQLConn();
-            
-            // retrieve the category list
-            p1.getProdList();
-            
-            // create or continue a session
-            HttpSession session = request.getSession(true);
+            p1 = getProductsbyCatID(prodCat);
             
             // set the attributes for category list object
-            session.setAttribute("prodlist", p1);
+            request.setAttribute("prodlist", p1);
             
             // forward request and response to JSP page for display to user
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
