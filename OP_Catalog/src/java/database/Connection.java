@@ -13,12 +13,10 @@ package database;
 public class Connection {
 
 	private static java.sql.Connection sqlConn = null;
-	private static final String SQLjdbcDriver = "com.microsoft.sqlserver.jdbc.SQLServerDriver"; 
+	private static final String sqlJDBCDriver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
 	private static final String SQLconnectionUrl = "jdbc:sqlserver://localhost";
 	private static final String SQLusername = "sa";
 	private static final String SQLpassword = "password";
-	private static java.sql.ResultSet rs = null;
-	private static java.sql.Statement stmt = null;
 
 	/**
 	 * Retrieves the SQL connection.
@@ -32,10 +30,32 @@ public class Connection {
 	 * Initializes the SQL connection.
 	 */
 	public static void initialize_Connection_SQL() 
-	{      
-            try{
-		sqlConn = java.sql.DriverManager.getConnection(SQLconnectionUrl,SQLusername, SQLpassword);
-		} catch (java.sql.SQLException e){System.err.println(e); }
+	{
+		try
+		{
+			Class.forName(sqlJDBCDriver);
+			try
+			{
+				sqlConn = java.sql.DriverManager.getConnection(SQLconnectionUrl, SQLusername, SQLpassword);
+			} //end inner try
+			catch (java.sql.SQLException e)
+			{
+				System.err.println(e);
+			} //end inner catch
+		} //end outer try
+		catch(ClassNotFoundException e)
+		{
+			System.err.println(e);
+		} //end outer catch
+		try
+		{
+			java.sql.Statement stmt = sqlConn.createStatement();
+			stmt.executeUpdate("use Olympic_Pride;");
+		}
+		catch (Exception e)
+		{
+			System.err.println(e);
+		}
 	}
     
         
@@ -43,23 +63,8 @@ public class Connection {
 	* Method to close the SQL connection.
 	*/
 	public static void closeSQLConn() {
-            //three try-catch blocks to ensure clean error handling
-            try {
-		if (stmt != null)
-                    stmt.close();
-		} //end try
-		catch (java.sql.SQLException e) {
-                    System.err.println(e);
-		} //end catch	
-		try {
-		if (rs!= null)
-                    rs.close();
-		} //end try
-		catch (java.sql.SQLException e) {
-                    System.err.println(e);
-		} //end catch
-		try {
-                    if(sqlConn != null)
+      try {
+			if(sqlConn != null)
 			sqlConn.close();
 		} //end try
 		catch (java.sql.SQLException e) {
