@@ -1,5 +1,5 @@
 /*
- * Servlet to query the Category database and create a Category object.
+ * Servlet to query the Product database by CategoryID and create an aray list of Product objects.
  * 3's Company (Amy Roberts, Bella Belova, Scott Young)
  * "We pledge that we have complied with the AIC in this work."
  * AR / BB / SY
@@ -15,39 +15,44 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Scott Young
  */
-public class QueryCategories extends HttpServlet {
-        static final String CATEGORY_TABLE_NAME = "CATEGORY";
-        private java.sql.Connection sqlConn;   
+public class QueryByCatID extends HttpServlet {
+        static final String PRODUCT_TABLE_NAME = "PRODUCT";
+        private java.sql.Connection sqlConn;
     
     /**
-     * Query to get categories from the database.
-     * @return A category list (array list) of category objects.
-     */
-    public CategoryList getCategories() {
+     * Query to get products from the Product database by CATEGORY_ID.
+     * @param catID A CATEGORY_ID integer value for a product.
+     * @return An array list of product objects.
+     */    
+    public ProductList getProductsbyCatID(String catID) {
         java.sql.Statement stmt;
-        CategoryList results = null;
-        java.util.ArrayList catObjects;
+        ProductList results = null;
+        java.util.ArrayList prodObjects;
         java.sql.ResultSet rs;
-		  catObjects = new java.util.ArrayList(); 
+		  prodObjects = new java.util.ArrayList(); 
         
         try{
-          String createString = "select * from " + CATEGORY_TABLE_NAME + ";";                
+          String createString = "select * from " + PRODUCT_TABLE_NAME +
+                  " where CATEGORY_ID like " + catID + ";";                
           stmt = sqlConn.createStatement();
           rs = stmt.executeQuery(createString);                   
-          results = new product.CategoryList();
+          results = new product.ProductList();
           while (rs.next() == true)
-            catObjects.add(new product.Category(rs.getInt("CATEGORY_ID"), rs.getString("CAT_NAME")));   
+            prodObjects.add(new product.Product(rs. getInt("PROD_ID"), rs.getInt("CATEGORY_ID"), 
+                    rs.getString("PROD_NAME"), rs.getInt("STOCK_QTY"), rs.getString("LONG_DESC"),
+                    rs.getFloat("PROD_WEIGHT"), rs.getFloat("PROD_PRICE"), rs.getBoolean("TAXABLE")));   
         } catch (java.sql.SQLException e) {
-		System.out.println("Unable to create requested Category object." + "\nDetail: " + e);
+		System.out.println("Unable to create requested Product object." + "\nDetail: " + e);
 		}
-	results.setCatList(catObjects);
+	results.setProdList(prodObjects);
         return results;
-    }
+    }    
     
     
     /**
@@ -63,43 +68,49 @@ public class QueryCategories extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        String url = "/displayCategories.jsp";
-                
+        String url = "/response.jsp";
+        
         try {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet QueryCategories</title>");            
+            out.println("<title>Servlet QueryByCatID</title>");            
             out.println("</head>");
             out.println("<body>");
             
-            out.println("<h1>Please choose a product category: </h1>");
+            // UPDATE PARAMETER VALUE to match the updated HTML href value****
+            String result = request.getParameter("****ID PARAMETER SELECTION*****");
+            out.println("<h1>Product Search Results from the " + result + "Category: </h1>");
             
-            // initialize db connection
-            Connection.initialize_Connection_SQL();            
+            // Create the product list object:
+            ProductList p1 = new ProductList();
             
-            // create the category list object
-            CategoryList c1 = new CategoryList();
+            // Get the product category selection from the user:
+            // UPDATE INPUT PARAMETER TO MATCH HREF ONCE UPDATED IN HTML!!!!
+            String prodCat = request.getParameter("****HREF LINK SELECTION BY USER*****");
             
-            // get the sql connection
+            // Establish the SQL connection:
             Connection.getSQLConn();
             
-            // query the db for the category names & ID's, return category list object
-            getCategories();
+            // Search the Product DB by Category ID selection of the user:
+            getProductsbyCatID(prodCat);
             
-            // close the sql connection
+            // Close the SQL connection:
             Connection.closeSQLConn();
             
             // retrieve the category list
-            c1.getCatList();
+            p1.getProdList();
+            
+            // create or continue a session
+            HttpSession session = request.getSession(true);
             
             // set the attributes for category list object
-            request.setAttribute("catlist", c1);
+            session.setAttribute("prodlist", p1);
             
             // forward request and response to JSP page for display to user
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
-            dispatcher.forward(request, response);              
+            dispatcher.forward(request, response);    
             
             out.println("</body>");
             out.println("</html>");
@@ -107,7 +118,6 @@ public class QueryCategories extends HttpServlet {
             out.close();
         }
     }
- 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
