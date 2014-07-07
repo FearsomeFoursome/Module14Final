@@ -24,6 +24,14 @@
         <servlet-name>ProductUpdater</servlet-name>
         <url-pattern>/ProductUpdater</url-pattern>
     </servlet-mapping>
+	 <servlet>
+		 <servlet-name>SearchProduct_servlet</servlet-name>
+		 <servlet-class>product.SearchProduct_servlet</servlet-class>
+	 </servlet>
+	 <servlet-mapping>
+		 <servlet-name>SearchProduct_servlet</servlet-name>
+		 <url-pattern>/SearchProduct_servlet</url-pattern>
+	 </servlet-mapping>
     <session-config>
         <session-timeout>
             30
