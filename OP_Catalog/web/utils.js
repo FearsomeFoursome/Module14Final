@@ -30,10 +30,9 @@ function header() {
   document.write('<a href="checkOrders.html">Check Orders</a>');
 
 
-   document.write('<form id="search" method="post" action="searchProds.html">');
-   //document.write('<form id="search" method="post" action="/default/SearchProduct_servlet.java">');
+   document.write('<form id="search" method="post" action="QueryByProd">');
    document.write('<input name="prodNumber" id="prodNumber" size="12" maxlength="15"/>');
-   document.write(' <input type="submit" value="Search"/>');
+   document.write('<input type="submit" value="Search"/>');
    document.write('</form>');
    
    
