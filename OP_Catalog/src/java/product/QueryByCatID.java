@@ -91,6 +91,7 @@ public class QueryByCatID extends HttpServlet {
             
             // Get the product category selection from the user:
             String prodCat = request.getParameter("id");
+            String prodName = request.getParameter("name");
             
             // Search the Product DB by Category ID selection of the user:
             p1 = getProductsbyCatID(prodCat);
