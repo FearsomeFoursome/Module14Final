@@ -30,12 +30,10 @@
 	 where CATEGORYID is the category ID from the DB and 
 	       CATEGORYNAME is the category name from the DB.
 -->
-<center><p>Please Select a Product Category:</p>
-<a href="products.html?id=1&name=CLOTHING">CLOTHING</a><br>
-    <a href="products.html?id=2&name=ACCESSORIES">ACCESSORIES</a><br>
-        <a href="products.html?id=3&name=HOUSEWARES">HOUSEWARES</a><br>
-                <a href="products.html?id=4&name=MISCELLANEOUS">MISCELLANEOUS</a></center><br>
-
+    <form method="post" action="QueryCategories">
+        <button type="submit">Generate Categories</button>
+    </form>
+    
 <script type="text/javascript">
 	footer();
 </script>

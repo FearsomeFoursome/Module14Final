@@ -71,10 +71,10 @@ public class QueryByCatID extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        String url = "/DisplayProductsbyCatID.jsp";
+        String url = "/displayProducts.jsp";
         
         try {
-            /* TODO output your page here. You may use following sample code. */
+
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -82,16 +82,15 @@ public class QueryByCatID extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             
-            // UPDATE PARAMETER VALUE to match the updated HTML href value****
-            String result = request.getParameter("****ID PARAMETER SELECTION*****");
+            // retrieve category name from the link that the user selects:
+            String result = request.getParameter("name");
             out.println("<h1>Product Search Results from the " + result + "Category: </h1>");
             
             // Create the product list object:
             ProductList p1 = new ProductList();
             
             // Get the product category selection from the user:
-            // UPDATE INPUT PARAMETER TO MATCH HREF ONCE UPDATED IN HTML!!!!
-            String prodCat = request.getParameter("****HREF LINK SELECTION BY USER*****");
+            String prodCat = request.getParameter("id");
             
             // Search the Product DB by Category ID selection of the user:
             p1 = getProductsbyCatID(prodCat);
