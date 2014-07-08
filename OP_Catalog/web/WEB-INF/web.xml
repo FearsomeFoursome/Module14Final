@@ -4,14 +4,18 @@
         <servlet-name>QueryCategories</servlet-name>
         <servlet-class>product.QueryCategories</servlet-class>
     </servlet>
-	 <servlet-mapping>
+    <servlet>
+        <servlet-name>StockUpdater</servlet-name>
+        <servlet-class>database.StockUpdater</servlet-class>
+    </servlet>
+    <servlet-mapping>
         <servlet-name>QueryCategories</servlet-name>
         <url-pattern>/QueryCategories</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>QueryByCatID</servlet-name>
         <servlet-class>product.QueryByCatID</servlet-class>
-    </servlet>    
+    </servlet>
     <servlet-mapping>
         <servlet-name>QueryByCatID</servlet-name>
         <url-pattern>/QueryByCatID</url-pattern>
@@ -19,10 +23,22 @@
     <servlet>
         <servlet-name>ProductUpdater</servlet-name>
         <servlet-class>database.ProductUpdater</servlet-class>
-	 </servlet>
-	 <servlet-mapping>
+    </servlet>
+    <servlet-mapping>
         <servlet-name>ProductUpdater</servlet-name>
         <url-pattern>/ProductUpdater</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>SearchProduct_servlet</servlet-name>
+        <servlet-class>product.SearchProduct_servlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SearchProduct_servlet</servlet-name>
+        <url-pattern>/SearchProduct_servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StockUpdater</servlet-name>
+        <url-pattern>/StockUpdater</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
