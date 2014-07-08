@@ -25,13 +25,14 @@
 		<script type="text/javascript">
 			header();
 		</script>
-        <h1>Olympic Pride Product Search Results:</h1>
+                <h1><div style="text-align:center">Olympic Pride Product Search Results:</div></h1>
         
         <%-- Product Search Results as a Table  --%>
         <table border=\"1\" align=\"center\"><br>
-            <tr><td>Add Item To Cart</td><td>Product ID</td><td>Category ID</td><td>Product Name</td>
-                <td>Stock Qty</td><td>Product Description</td>
-                <td>Product Price</td><td>Product Weight</td><td>Taxable</td>
+            <tr><th>Add Item To Cart</th><th>Product ID</th>
+                <th>Category ID</th><th>Product Name</th><th>Stock Qty</th>
+                <th>Product Description</th><th>Product Price</th>
+                <th>Product Weight</th><th>Taxable</th>
             </tr>
         <%
             // set the "catlist" object as a CategoryList variable:
@@ -47,9 +48,9 @@
                 out.println(prodList.get(x).getCategoryID() + "</td><td>");
                 out.println(prodList.get(x).getProdName() + "</td><td>");
                 out.println(prodList.get(x).getStockQty() + "</td><td>");
-                out.println(prodList.get(x).getLongDesc() + "</td><td>");
-                out.println(prodList.get(x).getProdPrice() + "</td><td>");
-                out.println(prodList.get(x).getProdWeight() + "</td><td>");
+                out.println(prodList.get(x).getLongDesc() + "</td>");
+                out.println("<td>$" + prodList.get(x).getProdPrice() + "</td>");
+                out.println("<td>" + prodList.get(x).getProdWeight() + " oz.</td><td>");
                 out.println(prodList.get(x).getTaxable() + "</td>");
                 out.println("</tr>");                
             }

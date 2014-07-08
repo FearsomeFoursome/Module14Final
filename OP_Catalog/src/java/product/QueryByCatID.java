@@ -81,17 +81,12 @@ public class QueryByCatID extends HttpServlet {
             out.println("<title>Servlet QueryByCatID</title>");            
             out.println("</head>");
             out.println("<body>");
-            
-            // retrieve category name from the link that the user selects:
-            String result = request.getParameter("name");
-            out.println("<h1>Product Search Results from the " + result + "Category: </h1>");
-            
+                      
             // Create the product list object:
             ProductList p1 = new ProductList();
             
             // Get the product category selection from the user:
             String prodCat = request.getParameter("id");
-            String prodName = request.getParameter("name");
             
             // Search the Product DB by Category ID selection of the user:
             p1 = getProductsbyCatID(prodCat);
