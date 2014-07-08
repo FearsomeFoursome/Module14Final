@@ -21,8 +21,10 @@ function header() {
 
   document.write("<a href='login.html'>Login</a> - ");
   document.write("<a href='logout.html'>Logout</a> - ");
-   
-  document.write('<a href="browseCats.html">Browse Catalog</a>');
+  
+    // adjust javaScript to call servlet when "Browse Catalog" link is selected by user:
+    // @author: Scott Young
+  document.write('<a href="QueryCategories">Browse Catalog</a>');
    
   document.write(' - <a href="checkout.html">Checkout</a> - ');
   document.write('<a href="checkOrders.html">Check Orders</a>');
