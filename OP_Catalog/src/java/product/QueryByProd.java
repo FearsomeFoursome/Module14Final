@@ -44,7 +44,7 @@ public class QueryByProd extends HttpServlet {
         sqlConn = Connection.getSQLConn();
         
         try{
-          String createString = "select * from " + PRODUCT_TABLE_NAME + " where PROD_ID = " + prodID + ";" ;                
+          String createString = "select * from " + PRODUCT_TABLE_NAME + " where PROD_ID LIKE '%" + prodID + "%';" ;                
           stmt = sqlConn.createStatement();
           rs = stmt.executeQuery(createString);
           results = new product.ProductList();
