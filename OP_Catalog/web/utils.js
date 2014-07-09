@@ -1,6 +1,7 @@
 /*
 ***************************************************************************
-*	Author:    Lisa Frye											      *
+*	Author:    Lisa Frye
+*	Edited by: Scott Young, 7/8/2014											      *
 *   Filename:  utils.js                                                   *
 *   Purpose:   JavaScript utililty functions for online olympic store for *
 *              a class project                                            *
@@ -21,17 +22,19 @@ function header() {
 
   document.write("<a href='login.html'>Login</a> - ");
   document.write("<a href='logout.html'>Logout</a> - ");
-   
-  document.write('<a href="browseCats.html">Browse Catalog</a>');
+  
+    // adjusted javaScript to call QueryCategories servlet when 'Browse Catalog' link is selected by user:
+    // @author: Scott Young
+  document.write('<a href="QueryCategories">Browse Catalog</a>');
    
   document.write(' - <a href="checkout.html">Checkout</a> - ');
   document.write('<a href="checkOrders.html">Check Orders</a>');
 
-
-   document.write('<form id="search" method="post" action="searchProds.html">');
-   //document.write('<form id="search" method="post" action="/default/SearchProduct_servlet.java">');
+    // adjusted javaScript action to call QueryByProd servlet upon user selection of 'search' button:
+    // @author: Scott Young
+   document.write('<form id="search" method="post" action="QueryByProd">');
    document.write('<input name="prodNumber" id="prodNumber" size="12" maxlength="15"/>');
-   document.write(' <input type="submit" value="Search"/>');
+   document.write('<input type="submit" value="Search"/>');
    document.write('</form>');
    
    

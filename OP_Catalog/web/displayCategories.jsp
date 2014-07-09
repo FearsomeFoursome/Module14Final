@@ -32,7 +32,7 @@
             ArrayList<Category> catList = c1.getCatList();
             // loop through the list and construct the html links via anchor tags:
             for (int x = 0; x < catList.size(); x++) {
-                out.println("<a href=\"/QueryByCatID?id=");
+                out.println("<a href=\"QueryByCatID?id=");
                 out.println(catList.get(x).getCategoryID());
                 out.println("&name=");
                 out.println(catList.get(x).getCategoryName());
