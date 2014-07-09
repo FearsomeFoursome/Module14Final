@@ -21,6 +21,14 @@
         <url-pattern>/QueryByCatID</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>QueryByProd</servlet-name>
+        <servlet-class>product.QueryByProd</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>QueryByProd</servlet-name>
+        <url-pattern>/QueryByProd</url-pattern>
+    </servlet-mapping>    
+    <servlet>
         <servlet-name>ProductUpdater</servlet-name>
         <servlet-class>database.ProductUpdater</servlet-class>
     </servlet>

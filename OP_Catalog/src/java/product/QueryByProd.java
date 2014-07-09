@@ -10,8 +10,6 @@ package product;
 import database.Connection;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -33,20 +31,20 @@ public class QueryByProd extends HttpServlet {
         String Prod_ID;
     /**
      * Query to get products from the Product database by CATEGORY_ID.
-     * @param prodID A PROD_ID integer value for a product.
+     * @param prodID A PROD_ID string value for a product.
      * @return An array list of product objects.
      */    
-    public ProductList searchbyProductID(int Product_ID){
+    public ProductList searchByProductID(String prodID){
         java.util.ArrayList prodObjects;
         ProductList results = null;
         java.sql.Statement stmt;
-        java.sql.ResultSet rs = null;
+        java.sql.ResultSet rs;
         prodObjects = new java.util.ArrayList(); 
         Connection.initialize_Connection_SQL();
         sqlConn = Connection.getSQLConn();
         
         try{
-          String createString = "select * from " + PRODUCT_TABLE_NAME + " where PROD_ID = " + Product_ID + ";" ;                
+          String createString = "select * from " + PRODUCT_TABLE_NAME + " where PROD_ID LIKE '%" + prodID + "%';" ;                
           stmt = sqlConn.createStatement();
           rs = stmt.executeQuery(createString);
           results = new product.ProductList();
@@ -61,8 +59,14 @@ public class QueryByProd extends HttpServlet {
         }
         results.setProdList(prodObjects);
         return results;
- }  
-     public ProductList searchByProdDesc(String ProdDesc){
+ } 
+    
+    /**
+     * 
+     * @param ProdDesc
+     * @return 
+     */
+     public ProductList searchByProductDesc(String ProdDesc){
         java.util.ArrayList prodObjects;
         ProductList results = null;
         java.sql.Statement stmt;
@@ -88,6 +92,12 @@ public class QueryByProd extends HttpServlet {
         results.setProdList(prodObjects);
         return results;        
     }
+     
+    /**
+     * 
+     * @param prod_desc
+     * @return 
+     */ 
     public ProductList getProductList(String prod_desc)
     {
         if(prod_desc.isEmpty())
@@ -117,11 +127,11 @@ public class QueryByProd extends HttpServlet {
             
             if(letter == true)
             {
-                return searchByProdDesc(prod_desc);
+                return searchByProductDesc(prod_desc);
             }
             else
             {
-                return searchbyProductID(prod_id_num);
+                return searchByProductID(String.valueOf(prod_id_num));
             }
         }    
     }
@@ -140,7 +150,7 @@ public class QueryByProd extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        String url = "/DisplayProductsbyCatID.jsp";
+        String url = "/displayProducts.jsp";
         
         try {
             /* TODO output your page here. You may use following sample code. */
@@ -153,14 +163,23 @@ public class QueryByProd extends HttpServlet {
             
             // UPDATE PARAMETER VALUE to match the updated HTML href value****
             String Prod_ID = request.getParameter("prodNumber");
-            out.println("<h1>Product Search Results from the " + Prod_ID + "Product: </h1>");
             
             // Create the product list object:
             ProductList p1 = new ProductList();
-            
            
+            /*
+            Check if the Prod_ID string contains a number, if so run searchByProductID,
+            If it does not contain a number, run the searchByProductDesc method
+            referenced http://stackoverflow.com/questions/6344867/checking-if-a-string-contains-a-number-or-not
+            for .matches logic & syntax
+            */
+            if(Prod_ID.matches(".*\\d.*")) {
+            p1 = searchByProductID(Prod_ID);
+            } else {
             // Search the Product DB by Category ID selection of the user:
-            p1 = getProductList(Prod_ID);
+            p1 = searchByProductDesc(Prod_ID);
+            }
+            /*
             out.println("<table border=1 cellspacing=0 cellpadding=3>");
             out.println("<tr>");
 	    out.println("<th>Product ID</th>");
@@ -168,6 +187,7 @@ public class QueryByProd extends HttpServlet {
 	    out.println("<th width=75>Price</th>");
 	    out.println("<th width=75>Quantity</th>");
 	    out.println("</tr>");
+            
             if(p1!=null)
             {
                 max_index = p1.getProdList().size();
@@ -182,6 +202,8 @@ public class QueryByProd extends HttpServlet {
                 }                
             }
             out.println("</table>");
+            */
+           
             // set the attributes for category list object
             request.setAttribute("prodlist", p1);
             
