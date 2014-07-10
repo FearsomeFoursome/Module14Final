@@ -18,6 +18,7 @@ public class Connection {
 	private static final String SQLusername = "sa";
 	private static final String SQLpassword = "password";
         public static final String PRODUCT_TABLE_NAME = "PRODUCT";
+        public static final String CATEGORY_TABLE_NAME = "CATEGORY";
 	/**
 	 * Retrieves the SQL connection.
 	 * @return A pointer to the currently open SQL connection.
