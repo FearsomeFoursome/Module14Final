@@ -21,7 +21,6 @@ import javax.servlet.http.HttpServletResponse;
  * @author Scott Young
  */
 public class QueryByCatID extends HttpServlet {
-        static final String PRODUCT_TABLE_NAME = "PRODUCT";
         private java.sql.Connection sqlConn;
     
     /**
@@ -39,7 +38,7 @@ public class QueryByCatID extends HttpServlet {
 	prodObjects = new java.util.ArrayList(); 
         
         try{
-          String createString = "select * from " + PRODUCT_TABLE_NAME +
+          String createString = "select * from " + Connection.PRODUCT_TABLE_NAME +
                   " where CATEGORY_ID like " + catID + ";";                
           stmt = sqlConn.createStatement();
           rs = stmt.executeQuery(createString);                   
@@ -83,13 +82,14 @@ public class QueryByCatID extends HttpServlet {
             out.println("<body>");
                       
             // Create the product list object:
-            ProductList p1 = new ProductList();
+            // ProductList p1 = new ProductList();
             
             // Get the product category selection from the user:
             String prodCat = request.getParameter("id");
             
-            // Search the Product DB by Category ID selection of the user:
-            p1 = getProductsbyCatID(prodCat);
+            /* Search the Product DB by Category ID selection of the user & get 
+                 the product list object: */
+            ProductList p1 = getProductsbyCatID(prodCat);
             
             // set the attributes for category list object
             request.setAttribute("prodlist", p1);
