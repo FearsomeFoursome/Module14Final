@@ -22,9 +22,8 @@ import javax.servlet.http.HttpServletResponse;
  * @author Bella Belova
  */
 public class QueryByProd extends HttpServlet {
-
-        static final String PRODUCT_TABLE_NAME = "PRODUCT";
-        private java.sql.Connection sqlConn;
+        
+    private java.sql.Connection sqlConn;
         boolean letter = true;
         int max_index, index;
         int prod_id_num;
@@ -35,21 +34,19 @@ public class QueryByProd extends HttpServlet {
      * @return An array list of product objects.
      */    
     public ProductList searchByProductID(String prodID){
-        java.util.ArrayList prodObjects;
         ProductList results = null;
         java.sql.Statement stmt;
         java.sql.ResultSet rs;
-        prodObjects = new java.util.ArrayList(); 
         Connection.initialize_Connection_SQL();
         sqlConn = Connection.getSQLConn();
         
         try{
-          String createString = "select * from " + PRODUCT_TABLE_NAME + " where PROD_ID LIKE '%" + prodID + "%';" ;                
+          String createString = "select * from " + Connection.PRODUCT_TABLE_NAME + " where PROD_ID LIKE '%" + prodID + "%';" ;                
           stmt = sqlConn.createStatement();
           rs = stmt.executeQuery(createString);
           results = new product.ProductList();
           while (rs.next() == true)
-            prodObjects.add(new product.Product(rs. getInt("PROD_ID"), rs.getInt("CATEGORY_ID"), 
+            results.addProductList(new product.Product(rs. getInt("PROD_ID"), rs.getInt("CATEGORY_ID"), 
                     rs.getString("PROD_NAME"), rs.getInt("STOCK_QTY"), rs.getString("LONG_DESC"),
                     rs.getFloat("PROD_WEIGHT"), rs.getFloat("PROD_PRICE"), rs.getBoolean("TAXABLE")));   
           Connection.closeSQLConn();
@@ -57,7 +54,6 @@ public class QueryByProd extends HttpServlet {
         }catch (java.sql.SQLException e){
             System.err.println("Unable to create requested Product object." + "\nDetail: " + e);
         }
-        results.setProdList(prodObjects);
         return results;
  } 
     
@@ -67,21 +63,19 @@ public class QueryByProd extends HttpServlet {
      * @return 
      */
      public ProductList searchByProductDesc(String ProdDesc){
-        java.util.ArrayList prodObjects;
         ProductList results = null;
         java.sql.Statement stmt;
         java.sql.ResultSet rs = null;
-        prodObjects = new java.util.ArrayList(); 
         Connection.initialize_Connection_SQL();
         sqlConn = Connection.getSQLConn();
         
         try{
-          String createString = "select * from " + PRODUCT_TABLE_NAME + " where PROD_NAME LIKE '% " + ProdDesc  + " %' or LONG_DESC LIKE '%" + ProdDesc + " %';" ;                
+          String createString = "select * from " + Connection.PRODUCT_TABLE_NAME + " where PROD_NAME LIKE '% " + ProdDesc  + " %' or LONG_DESC LIKE '%" + ProdDesc + " %';" ;                
           stmt = sqlConn.createStatement();
           rs = stmt.executeQuery(createString);
           results = new product.ProductList();
           while (rs.next() == true)
-            prodObjects.add(new product.Product(rs. getInt("PROD_ID"), rs.getInt("CATEGORY_ID"), 
+            results.addProductList(new product.Product(rs. getInt("PROD_ID"), rs.getInt("CATEGORY_ID"), 
                     rs.getString("PROD_NAME"), rs.getInt("STOCK_QTY"), rs.getString("LONG_DESC"),
                     rs.getFloat("PROD_WEIGHT"), rs.getFloat("PROD_PRICE"), rs.getBoolean("TAXABLE")));   
           Connection.closeSQLConn();
@@ -89,7 +83,6 @@ public class QueryByProd extends HttpServlet {
                  }catch (java.sql.SQLException e){
             System.err.println("Unable to create requested Product object." + "\nDetail: " + e);
         }
-        results.setProdList(prodObjects);
         return results;        
     }
      
@@ -164,8 +157,8 @@ public class QueryByProd extends HttpServlet {
             // UPDATE PARAMETER VALUE to match the updated HTML href value****
             String Prod_ID = request.getParameter("prodNumber");
             
-            // Create the product list object:
-            ProductList p1 = new ProductList();
+            // declare the product list variable:
+            ProductList p1;
            
             /*
             Check if the Prod_ID string contains a number, if so run searchByProductID,
@@ -179,31 +172,7 @@ public class QueryByProd extends HttpServlet {
             // Search the Product DB by Category ID selection of the user:
             p1 = searchByProductDesc(Prod_ID);
             }
-            /*
-            out.println("<table border=1 cellspacing=0 cellpadding=3>");
-            out.println("<tr>");
-	    out.println("<th>Product ID</th>");
-	    out.println("<th>Description</th>");
-	    out.println("<th width=75>Price</th>");
-	    out.println("<th width=75>Quantity</th>");
-	    out.println("</tr>");
-            
-            if(p1!=null)
-            {
-                max_index = p1.getProdList().size();
-                for(index = 0; index <  max_index; index++)
-                {
-                    out.println("<tr>");
-                    out.println("<th>" + p1.getProdList().get(index).getProdID() + "</th>");
-                    out.println("<th>" + p1.getProdList().get(index).getLongDesc() + "</th>");
-                    out.println("<th width=75>" + p1.getProdList().get(index).getProdPrice() + "</th>");
-                    out.println("<th width=75>" + p1.getProdList().get(index).getStockQty() + "</th>");
-                    out.println("</tr>");
-                }                
-            }
-            out.println("</table>");
-            */
-           
+ 
             // set the attributes for category list object
             request.setAttribute("prodlist", p1);
             
