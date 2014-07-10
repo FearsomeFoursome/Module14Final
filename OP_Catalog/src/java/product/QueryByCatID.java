@@ -33,9 +33,7 @@ public class QueryByCatID extends HttpServlet {
         sqlConn = Connection.getSQLConn();
         java.sql.Statement stmt;
         ProductList results = null;
-        java.util.ArrayList prodObjects;
-        java.sql.ResultSet rs;
-	prodObjects = new java.util.ArrayList(); 
+        java.sql.ResultSet rs; 
         
         try{
           String createString = "select * from " + Connection.PRODUCT_TABLE_NAME +
@@ -44,7 +42,7 @@ public class QueryByCatID extends HttpServlet {
           rs = stmt.executeQuery(createString);                   
           results = new product.ProductList();
           while (rs.next() == true)
-            prodObjects.add(new product.Product(rs. getInt("PROD_ID"), rs.getInt("CATEGORY_ID"), 
+            results.addProductList(new product.Product(rs. getInt("PROD_ID"), rs.getInt("CATEGORY_ID"), 
                     rs.getString("PROD_NAME"), rs.getInt("STOCK_QTY"), rs.getString("LONG_DESC"),
                     rs.getFloat("PROD_WEIGHT"), rs.getFloat("PROD_PRICE"), rs.getBoolean("TAXABLE")));   
           Connection.closeSQLConn();
@@ -52,7 +50,6 @@ public class QueryByCatID extends HttpServlet {
         } catch (java.sql.SQLException e) {
 		System.err.println("Unable to create requested Product object." + "\nDetail: " + e);
 		}
-	results.setProdList(prodObjects);
         return results;
     }    
     
