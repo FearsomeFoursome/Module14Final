@@ -45,17 +45,21 @@ public class ProductUpdater extends HttpServlet {
 			int dataerrors = 0;
 			String line;
 			
+			//pick up the filename from the passed parameter and add the path
+			String filename = "/WEB-INF/" + request.getParameter("file");
+			
 			//initialize column header array to defaults
 			String columns[] = {"PROD_ID","CATEGORY_ID","STOCK_QTY","PROD_PRICE","PROD_WEIGHT","TAXABLE","PROD_NAME","LONG_DESC"};
 			
+			//read the file into a buffered reader; let the reader handle line breaks
 			ServletContext context = getServletContext();
-			InputStream input = context.getResourceAsStream("/WEB-INF/backup.csv");
+			InputStream input = context.getResourceAsStream(filename);
 			InputStreamReader ireader = new InputStreamReader(input);
 			BufferedReader reader = new BufferedReader(ireader);
 						
 			//parse the first line and save it to an array
 			String temp = reader.readLine();
-			if (temp.contains(";") || temp.contains("where") || temp.contains("drop") || temp.contains("select"))
+			if (temp.contains(";") || temp.contains("where ") || temp.contains("drop ") || temp.contains("select "))
 			{
 				dataerrors++;
 			} //end if to check for SQL injection; default column headers used
@@ -67,7 +71,7 @@ public class ProductUpdater extends HttpServlet {
 			//now parse the rest and save them
 			while ((line = reader.readLine()) != null)
 			{
-				if (line.contains(";") || line.contains("where") || line.contains("drop") || line.contains("select"))
+				if (line.contains(";") || line.contains("where ") || line.contains("drop ") || line.contains("select "))
 				{
 					dataerrors++;
 					linefailures++;
