@@ -1,0 +1,25 @@
+PROD_ID,PROD_NAME,STOCK_QTY,PROD_PRICE,PROD_WEIGHT,TAXABLE,CATEGORY_ID,LONG_DESC
+1000,Team USA Pin ;-- drop table Products;,10,3.99,2,1,2,A pin with the Team USA logo.
+1001,Olympic USA Adult Gloves,5,3.97,8,1,2,The 100% acrylic blue gloves feature red white and blue stripes
+1002,Olympic Ladies Tank Top,2,13.97,12,1,1,Cotton tank top with the Olympic rings
+1003,Olympic Wall Decor Stickers Set,0,9.99,4,1,3,Reusable sticker set. Resists drops of water!
+1004,US Olympic Team Flag,0,2.5,2,1,2,Iron-on embroidered patch
+1005,Jamaican Bobsled Shirt,1,19.99,14,1,1,A T-shirt with the sled design for the Jamaican bobsled team.
+1006,Team Japan Hat,2,24.99,8,1,1,A comfortable baseball cap with the Team Japan logo.
+1007,Olympic Pride Gift Card,10,20,2,0,5,A gift card for our website!
+1008,Olympic Mug,5,5.99,8,1,3,A coffee mug with an Olympic ring design.
+1009,Olympic Throw Blanket,0,19.99,16,1,3,A throw blanket displaying the hosting country's flag & colors.
+1010,Team USA Bandana,5,11.99,4,1,2,Bandana with American flag pattern.
+1011,Olympic Torch Lighter,2,3.99,3,1,5,Lighter shaped like a miniature Olympic torch.
+1012,Olympic Postcard,25,1.99,2,1,5,Postcard to send back home to friends featuring Olympic Rings and host country's landmark landscapes.
+1013,Olympic Scarf,4,9.99,13,1,2,Scarf with official Olympic design.
+1014,Team USA Jacket,2,65.99,32,1,1,Heavy black jacket with the American flag design across the back.
+1015,Team Brazil Bracelet,2,4.99,2,1,2,Bracelet featuring the national colors of Brazil.
+1016,Team USA Winter Hat Skullcap,8,21.99,9,1,1,A winter hat in skull cap design featuring national colors of the United States.
+1017,Team Australia Swim Cap,0,8.99,2,1,2,An official swim cap of the Olympics featuring Australia's flag and national colors.
+1018,Olympic Mesh Shorts,0,24.99,12,1,1,Mesh shorts featuring the Olympic rings across the back.
+1019,Team USA Men's Polo Shirt,2,34.99,22,1,1,Polo shirt featuring the American flag.
+1020,Team USA Women's Yoga Pants,1,29.99,14,1,1,Yoga pants featuring the American flag on the left thigh.
+1021,Olympic Sweatpants,0,25.99,18,1,1,Gray sweatpants with the Olympic rings across the back.
+1022,Olympic Sweatshirt,0,34.99,28,1,1,Black sweatshirt with the Olympic rings across the front.
+1023,Team USA Beach Towel,1,19.99,28,1,5,Beach towel with American flag design.

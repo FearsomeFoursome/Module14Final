@@ -34,4 +34,10 @@ public class CategoryList {
      */
     public ArrayList<Category> getCatList(){ return catList; }
     
+    /**
+     * Add the passed parameter into the category array list.
+     * @param cat The product object.
+     */
+    public void addCategoryList(Category cat) { catList.add(cat); }    
+    
 }
