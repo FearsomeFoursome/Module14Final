@@ -46,17 +46,21 @@ public class StockUpdater extends HttpServlet {
 			int badquantities = 0;
 			String line;
 			
+			//pick up the filename from the passed parameter and add the path
+			String filename = "/WEB-INF/" + request.getParameter("file");
+			
 			//initialize column header array to defaults
 			String columns[] = {"PROD_ID","CATEGORY_ID","STOCK_QTY","PROD_PRICE","PROD_WEIGHT","TAXABLE","PROD_NAME","LONG_DESC"};
 			
+			//read the file into a buffered reader; let the reader handle line breaks
 			ServletContext context = getServletContext();
-			InputStream input = context.getResourceAsStream("/WEB-INF/update.csv");
+			InputStream input = context.getResourceAsStream(filename);
 			InputStreamReader ireader = new InputStreamReader(input);
 			BufferedReader reader = new BufferedReader(ireader);
 						
 			//parse the first line and save it to an array
 			String temp = reader.readLine();
-			if (temp.contains(";") || temp.contains("where") || temp.contains("drop") || temp.contains("select"))
+			if (temp.contains(";") || temp.contains("where ") || temp.contains("drop ") || temp.contains("select "))
 			{
 				dataerrors++;
 			} //end if to check for SQL injection; default column headers used
@@ -68,7 +72,7 @@ public class StockUpdater extends HttpServlet {
 			//now parse the rest and save them
 			while ((line = reader.readLine()) != null)
 			{
-				if (line.contains(";") || line.contains("where") || line.contains("drop") || line.contains("select"))
+				if (line.contains(";") || line.contains("where ") || line.contains("drop ") || line.contains("select "))
 				{
 					dataerrors++;
 					linefailures++;
@@ -93,6 +97,7 @@ public class StockUpdater extends HttpServlet {
 						if(sqlfailed == 2)
 						{
 							badquantities++;
+							linefailures++;
 						}
 						else
 						{
@@ -148,7 +153,7 @@ public class StockUpdater extends HttpServlet {
 			conn = Connection.getSQLConn();
 			
 			//check to see if a line already exists with the primary key
-			builtstatement = "select * from Product where " + columns[0]
+			builtstatement = "select * from " + Connection.PRODUCT_TABLE_NAME + " where " + columns[0]
 					  + " = " + items[0] + ";";
 			
 			stmt = conn.createStatement();
@@ -201,13 +206,12 @@ public class StockUpdater extends HttpServlet {
 				if(newstock < 0)
 				{
 					errorfound = 2;
-					System.out.println("Quantity less than 0!");
 					stmt = null;
 				}
 				else
 				{
 					//build an update statement to update the product price and stock quantity
-					builtstatement = "update Product set " + columns[stock] + " = '" 
+					builtstatement = "update " + Connection.PRODUCT_TABLE_NAME + " set " + columns[stock] + " = '" 
 							  + newstock + "', " + columns[price] + " = '" 
 							  + items[price] + "' where " + columns[0] + " = " + items[0];
 				}
@@ -216,7 +220,7 @@ public class StockUpdater extends HttpServlet {
 			else
 			{
 				//insert a new product row
-				builtstatement = "insert into Product (" + columns[0] + ", " + columns[1]
+				builtstatement = "insert into " + Connection.PRODUCT_TABLE_NAME + " (" + columns[0] + ", " + columns[1]
 						  + ", " + columns[2] + ", " + columns[3] + ", " + columns[4]
 						  + ", " + columns[5] + ", " + columns[6] + ", " + columns[7]
 						  + ") values('" + items[0] + "', '" + items[1] + "', '" + items[2]

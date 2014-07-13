@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Scott Young
  */
 public class QueryCategories extends HttpServlet {
-        static final String CATEGORY_TABLE_NAME = "CATEGORY";
+
         private java.sql.Connection sqlConn;   
     
     /**
@@ -33,23 +33,20 @@ public class QueryCategories extends HttpServlet {
         sqlConn = Connection.getSQLConn();
         java.sql.Statement stmt;
         CategoryList results = null;
-        java.util.ArrayList catObjects;
-        java.sql.ResultSet rs;
-		  catObjects = new java.util.ArrayList(); 
+        java.sql.ResultSet rs; 
         
         try{
-          String createString = "select * from " + CATEGORY_TABLE_NAME + ";";                
+          String createString = "select * from " + Connection.CATEGORY_TABLE_NAME + ";";                
           stmt = sqlConn.createStatement();
           rs = stmt.executeQuery(createString);                   
           results = new product.CategoryList();
           while (rs.next() == true)
-            catObjects.add(new product.Category(rs.getInt("CATEGORY_ID"), rs.getString("CAT_NAME")));   
+            results.addCategoryList(new product.Category(rs.getInt("CATEGORY_ID"), rs.getString("CAT_NAME")));   
           Connection.closeSQLConn();
           stmt.close();        
         } catch (java.sql.SQLException e) {
 		System.err.println("Unable to create requested Category object." + "\nDetail: " + e);
 		}
-	results.setCatList(catObjects);
         return results;
     }
     
@@ -69,12 +66,9 @@ public class QueryCategories extends HttpServlet {
         PrintWriter out = response.getWriter();
         String url = "/displayCategories.jsp";
                 
-        try {                   
-            // create the category list object
-            CategoryList c1 = new CategoryList();         
-            
+        try {                                   
             // query the db for the category names & ID's, return category list object
-            c1 = getCategories();
+            CategoryList c1 = getCategories();
             
             // set the attributes for category list object
             request.setAttribute("catlist", c1);

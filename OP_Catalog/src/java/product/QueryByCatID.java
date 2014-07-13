@@ -21,7 +21,6 @@ import javax.servlet.http.HttpServletResponse;
  * @author Scott Young
  */
 public class QueryByCatID extends HttpServlet {
-        static final String PRODUCT_TABLE_NAME = "PRODUCT";
         private java.sql.Connection sqlConn;
     
     /**
@@ -34,18 +33,16 @@ public class QueryByCatID extends HttpServlet {
         sqlConn = Connection.getSQLConn();
         java.sql.Statement stmt;
         ProductList results = null;
-        java.util.ArrayList prodObjects;
-        java.sql.ResultSet rs;
-	prodObjects = new java.util.ArrayList(); 
+        java.sql.ResultSet rs; 
         
         try{
-          String createString = "select * from " + PRODUCT_TABLE_NAME +
+          String createString = "select * from " + Connection.PRODUCT_TABLE_NAME +
                   " where CATEGORY_ID like " + catID + ";";                
           stmt = sqlConn.createStatement();
           rs = stmt.executeQuery(createString);                   
           results = new product.ProductList();
           while (rs.next() == true)
-            prodObjects.add(new product.Product(rs. getInt("PROD_ID"), rs.getInt("CATEGORY_ID"), 
+            results.addProductList(new product.Product(rs. getInt("PROD_ID"), rs.getInt("CATEGORY_ID"), 
                     rs.getString("PROD_NAME"), rs.getInt("STOCK_QTY"), rs.getString("LONG_DESC"),
                     rs.getFloat("PROD_WEIGHT"), rs.getFloat("PROD_PRICE"), rs.getBoolean("TAXABLE")));   
           Connection.closeSQLConn();
@@ -53,7 +50,6 @@ public class QueryByCatID extends HttpServlet {
         } catch (java.sql.SQLException e) {
 		System.err.println("Unable to create requested Product object." + "\nDetail: " + e);
 		}
-	results.setProdList(prodObjects);
         return results;
     }    
     
@@ -83,13 +79,14 @@ public class QueryByCatID extends HttpServlet {
             out.println("<body>");
                       
             // Create the product list object:
-            ProductList p1 = new ProductList();
+            // ProductList p1 = new ProductList();
             
             // Get the product category selection from the user:
             String prodCat = request.getParameter("id");
             
-            // Search the Product DB by Category ID selection of the user:
-            p1 = getProductsbyCatID(prodCat);
+            /* Search the Product DB by Category ID selection of the user & get 
+                 the product list object: */
+            ProductList p1 = getProductsbyCatID(prodCat);
             
             // set the attributes for category list object
             request.setAttribute("prodlist", p1);
