@@ -153,7 +153,7 @@ public class StockUpdater extends HttpServlet {
 			conn = Connection.getSQLConn();
 			
 			//check to see if a line already exists with the primary key
-			builtstatement = "select * from Product where " + columns[0]
+			builtstatement = "select * from " + Connection.PRODUCT_TABLE_NAME + " where " + columns[0]
 					  + " = " + items[0] + ";";
 			
 			stmt = conn.createStatement();
@@ -211,7 +211,7 @@ public class StockUpdater extends HttpServlet {
 				else
 				{
 					//build an update statement to update the product price and stock quantity
-					builtstatement = "update Product set " + columns[stock] + " = '" 
+					builtstatement = "update " + Connection.PRODUCT_TABLE_NAME + " set " + columns[stock] + " = '" 
 							  + newstock + "', " + columns[price] + " = '" 
 							  + items[price] + "' where " + columns[0] + " = " + items[0];
 				}
@@ -220,7 +220,7 @@ public class StockUpdater extends HttpServlet {
 			else
 			{
 				//insert a new product row
-				builtstatement = "insert into Product (" + columns[0] + ", " + columns[1]
+				builtstatement = "insert into " + Connection.PRODUCT_TABLE_NAME + " (" + columns[0] + ", " + columns[1]
 						  + ", " + columns[2] + ", " + columns[3] + ", " + columns[4]
 						  + ", " + columns[5] + ", " + columns[6] + ", " + columns[7]
 						  + ") values('" + items[0] + "', '" + items[1] + "', '" + items[2]
