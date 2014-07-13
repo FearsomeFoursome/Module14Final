@@ -34,4 +34,10 @@ public class ProductList {
      */
     public ArrayList<Product> getProdList(){ return prodList; }
     
+    /**
+     * Pass the product objects into the product list array list object.
+     * @param prod The product object.
+     */
+    public void addProductList(Product prod) { prodList.add(prod); }
+    
 }
