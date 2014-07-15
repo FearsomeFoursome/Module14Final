@@ -1,6 +1,7 @@
 /*
  * Servlet to query the Product database by CategoryID and create an aray list of Product objects.
  * 3's Company (Amy Roberts, Bella Belova, Scott Young)
+ * Author: Scott Young
  * "We pledge that we have complied with the AIC in this work."
  * AR / BB / SY
  */
@@ -77,9 +78,6 @@ public class QueryByCatID extends HttpServlet {
             out.println("<title>Servlet QueryByCatID</title>");            
             out.println("</head>");
             out.println("<body>");
-                      
-            // Create the product list object:
-            // ProductList p1 = new ProductList();
             
             // Get the product category selection from the user:
             String prodCat = request.getParameter("id");
@@ -91,7 +89,7 @@ public class QueryByCatID extends HttpServlet {
             // set the attributes for category list object
             request.setAttribute("prodlist", p1);
             
-            // forward request and response to JSP page for display to user
+            // forward request and response to JSP page for display to user:
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
             dispatcher.forward(request, response);    
             

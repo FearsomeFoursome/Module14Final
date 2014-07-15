@@ -1,6 +1,7 @@
 /*
  * Servlet to query the Category database and create a Category object.
  * 3's Company (Amy Roberts, Bella Belova, Scott Young)
+ * Author: Scott Young
  * "We pledge that we have complied with the AIC in this work."
  * AR / BB / SY
  */
@@ -27,6 +28,7 @@ public class QueryCategories extends HttpServlet {
     /**
      * Query to get categories from the database.
      * @return A category list (array list) of category objects.
+     * @author Scott Young
      */
     public CategoryList getCategories() {
         Connection.initialize_Connection_SQL();
@@ -59,6 +61,7 @@ public class QueryCategories extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
+     * @author Scott Young
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

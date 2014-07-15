@@ -1,6 +1,7 @@
 /*
  * Category Class
  * 3's Company (Amy Roberts, Bella Belova, Scott Young)
+ * Author: Scott Young
  * "We pledge that we have complied with the AIC in this work."
  * AR / BB / SY
  */

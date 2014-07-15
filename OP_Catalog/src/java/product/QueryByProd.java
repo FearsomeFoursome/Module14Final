@@ -1,6 +1,7 @@
 /*
  * Servlet to query the Product database by Product_ID or Product Description and create an aray list of Product objects.
  * 3's Company (Amy Roberts, Bella Belova, Scott Young)
+ * Author: Bella Belova, Scott Young
  * "We pledge that we have complied with the AIC in this work."
  * AR / BB / SY
  */
@@ -29,9 +30,10 @@ public class QueryByProd extends HttpServlet {
         int prod_id_num;
         String Prod_ID;
     /**
-     * Query to get products from the Product database by CATEGORY_ID.
+     * Query to get products from the Product database by PROD_ID.
      * @param prodID A PROD_ID string value for a product.
      * @return An array list of product objects.
+     * @author Bella Belova (assistance from Scott Young)
      */    
     public ProductList searchByProductID(String prodID){
         ProductList results = null;
@@ -58,9 +60,10 @@ public class QueryByProd extends HttpServlet {
  } 
     
     /**
-     * 
+     * Query to get products from the Product database by LONG_DESC.
      * @param ProdDesc
-     * @return 
+     * @return An array list of product objects.
+     * @author Bella Belova (assistance from Scott Young)
      */
      public ProductList searchByProductDesc(String ProdDesc){
         ProductList results = null;
@@ -87,9 +90,10 @@ public class QueryByProd extends HttpServlet {
     }
      
     /**
-     * 
-     * @param prod_desc
-     * @return 
+     * Method to check if search box input is a letter or number.
+     * @param prod_desc A variable for the input from the user.
+     * @return An array list of Product objects.
+     * @author Bella Belova
      */ 
     public ProductList getProductList(String prod_desc)
     {
@@ -138,6 +142,7 @@ public class QueryByProd extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
+     * @author Bella Belova (assistance from Scott Young)
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
