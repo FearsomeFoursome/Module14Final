@@ -43,7 +43,6 @@
             }
 	%>
             </div>
-        <!-- ******update links to direct to QueryByCatID servlet****** -->
 
             <script type="text/javascript">
 		footer();
