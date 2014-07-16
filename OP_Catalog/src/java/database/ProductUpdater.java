@@ -1,7 +1,9 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * 3's Company (Amy Roberts, Bella Belova, Scott Young)
+ * "We pledge that we have complied with the AIC in this work."
+ * Author: Amy Roberts
+ * Class to handle reading & parsing a comma-delimited file (.csv) and overwriting
+ * or inserting row data into the SQL Server database's PRODUCT table.
  */
 
 package database;
@@ -19,8 +21,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
- * @author Amy
+ * Main servlet class.
+ * @author Amy Roberts
  */
 public class ProductUpdater extends HttpServlet {
 
@@ -84,6 +86,7 @@ public class ProductUpdater extends HttpServlet {
 					String items[] = line.split(",", -1);
 					
 					//pass this to SQL and save the returned boolean
+					//true means there was an SQL error, false means no errors
 					boolean sqlfailed = savetodatabase(columns, items);
 					
 					if (sqlfailed == true)

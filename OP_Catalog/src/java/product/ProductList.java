@@ -1,6 +1,7 @@
 /*
  * ProductList class to create an object out of the Product array lists
- * #'s Company (Amy Roberts, Bella Belova, Scott Young)
+ * 3's Company (Amy Roberts, Bella Belova, Scott Young)
+ * Author: Scott Young, Amy Roberts
  * "We pledge that we have complied with the AIC in this work."
  * AR / BB / SY
  */
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Scott Young
+ * @author Scott Young, Amy Roberts
  */
 public class ProductList {
     // Assign product array list instance variable:
@@ -37,6 +38,7 @@ public class ProductList {
     /**
      * Pass the product objects into the product list array list object.
      * @param prod The product object.
+     * @author Amy Roberts
      */
     public void addProductList(Product prod) { prodList.add(prod); }
     

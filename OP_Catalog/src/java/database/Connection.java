@@ -1,14 +1,14 @@
 /*
  * 3's Company (Amy Roberts, Bella Belova, Scott Young)
  * "We pledge that we have complied with the AIC in this work."
- *
+ * Author: Bella Belova, Amy Roberts
  * Class to handle establishing database connections
  */
 package database;
 
 /**
  * This class includes methods to establish SQL and MySQL database connections.
- * @author Bella Belova; modified by Scott Young
+ * @author Bella Belova; updated/modified by Amy Roberts
  */
 public class Connection {
 

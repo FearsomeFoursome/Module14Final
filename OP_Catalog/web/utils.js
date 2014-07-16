@@ -1,7 +1,7 @@
 /*
 ***************************************************************************
-*	Author:    Lisa Frye
-*	Edited by: Scott Young, 7/8/2014											      *
+*   Author:    Lisa Frye
+*   Edited by: Scott Young, 7/8/2014					  *
 *   Filename:  utils.js                                                   *
 *   Purpose:   JavaScript utililty functions for online olympic store for *
 *              a class project                                            *
