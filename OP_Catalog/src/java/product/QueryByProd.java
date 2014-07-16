@@ -29,6 +29,8 @@ public class QueryByProd extends HttpServlet {
         int max_index, index;
         int prod_id_num;
         String Prod_ID;
+        String Prod_ID_without_s;
+        char [] symbols;
     /**
      * Query to get products from the Product database by PROD_ID.
      * @param prodID A PROD_ID string value for a product.
@@ -65,15 +67,24 @@ public class QueryByProd extends HttpServlet {
      * @return An array list of product objects.
      * @author Bella Belova (assistance from Scott Young)
      */
-     public ProductList searchByProductDesc(String ProdDesc){
+     public ProductList searchByProductDesc(String ProdDesc,int input_length){
         ProductList results = null;
         java.sql.Statement stmt;
         java.sql.ResultSet rs = null;
         Connection.initialize_Connection_SQL();
         sqlConn = Connection.getSQLConn();
-        
+        String createString;
         try{
-          String createString = "select * from " + Connection.PRODUCT_TABLE_NAME + " where PROD_NAME LIKE '% " + ProdDesc  + " %' or LONG_DESC LIKE '%" + ProdDesc + " %';" ;                
+            if ((ProdDesc.length()==0)||(input_length==0))
+            {
+                createString = "select * from " + Connection.PRODUCT_TABLE_NAME + " where PROD_NAME LIKE '% " + ProdDesc  + " %' or LONG_DESC LIKE '%" + ProdDesc + " %';" ;                
+            }
+            else
+            {
+                createString = "select * from " + Connection.PRODUCT_TABLE_NAME + " where PROD_NAME LIKE CONCAT('%', SUBSTRING('" + ProdDesc  + "', 0, " + input_length + "), '%') "
+                    + "or LONG_DESC LIKE CONCAT('%', SUBSTRING('" + ProdDesc  + "', 0, " + input_length + "), '%') " ;                
+            }
+               
           stmt = sqlConn.createStatement();
           rs = stmt.executeQuery(createString);
           results = new product.ProductList();
@@ -115,20 +126,26 @@ public class QueryByProd extends HttpServlet {
             {
                     letter = false;
             }
-
-            for(index = 0; index < max_index; index++)
+            if(letter == false)
             {
-                // convert input to Integer
-                prod_id_num += prod_id_num*10 + prod_desc.charAt(index) - '0';
-            }
-            
-            if(letter == true)
-            {
-                return searchByProductDesc(prod_desc);
+                for(index = 0; index < max_index; index++)
+                {
+                    // convert input to Integer
+                    prod_id_num += prod_id_num*10 + prod_desc.charAt(index) - '0';
+                }
+                return searchByProductID(String.valueOf(prod_id_num));
             }
             else
-            {
-                return searchByProductID(String.valueOf(prod_id_num));
+            {   // Check for plural keywords.
+                if(prod_desc.charAt(prod_desc.length() - 1) == 's' || (prod_desc.length() - 1) == 'S')
+                {
+                    // If the keywords is plural, last symbol is dropped
+                    return searchByProductDesc(prod_desc, prod_desc.length() - 1);
+                }
+                else
+                {
+                    return searchByProductDesc(prod_desc, prod_desc.length());
+                }
             }
         }    
     }
@@ -175,8 +192,9 @@ public class QueryByProd extends HttpServlet {
             p1 = searchByProductID(Prod_ID);
             } else {
             // Search the Product DB by Category ID selection of the user:
-            p1 = searchByProductDesc(Prod_ID);
+            p1 = searchByProductDesc(Prod_ID, Prod_ID.length());
             }
+ 
  
             // set the attributes for category list object
             request.setAttribute("prodlist", p1);
