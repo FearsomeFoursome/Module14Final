@@ -2,8 +2,8 @@
  * 3's Company (Amy Roberts, Bella Belova, Scott Young)
  * "We pledge that we have complied with the AIC in this work."
  * Author: Amy Roberts
- * Class to handle reading & parsing a comma-delimited file (.csv) and inserting
- * row data into the SQL Server database's PRODUCT table to change Stock Qty.
+ * Class to handle reading & parsing a comma-delimited file (.csv) and updating
+ * the stock quantity and prices of multiple products.
  */
 
 package database;
@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
+ * Servlet main class.
  * @author Amy Roberts
  */
 public class StockUpdater extends HttpServlet {
@@ -40,7 +40,7 @@ public class StockUpdater extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		try (PrintWriter out = response.getWriter()) {
 			
-			//variable declarations
+			//variable declarations - mostly error handling
 			int linesuccesses = 0;
 			int linefailures = 0;
 			int sqlerrors = 0;
@@ -69,7 +69,7 @@ public class StockUpdater extends HttpServlet {
 			else
 			{
 				columns = temp.split(",", -1);
-			} //end else when no SQL injection found
+			} //end else when no SQL injection found, column headers in array
 		
 			//now parse the rest and save them
 			while ((line = reader.readLine()) != null)
@@ -86,26 +86,27 @@ public class StockUpdater extends HttpServlet {
 
 					String items[] = line.split(",", -1);
 					
-					//pass this to SQL and save the returned boolean
+					//pass this to SQL and save the returned variable
+					//0 is a pass, 1 means an SQL error, 2 means the line would reduce stock below 0
 					int sqlfailed = savetodatabase(columns, items);
 					
 					if (sqlfailed == 1)
 					{
 						sqlerrors++;
 						linefailures++;
-					}
+					} //end if
 					else
 					{
 						if(sqlfailed == 2)
 						{
 							badquantities++;
 							linefailures++;
-						}
+						} //end quantities-below-0 else
 						else
 						{
 							linesuccesses++;
-						}					
-					}				
+						} //end no-error else			
+					} //end error-check else		
 
 				} //end else when no SQL injection found
 
@@ -138,7 +139,8 @@ public class StockUpdater extends HttpServlet {
 	}
 
 	//Saves the array of items into the columns named in the columns array.
-	//Boolean returned is true if an error is encountered, or false if no errors.
+	//Integer returned is 0 if no errors, 1 if SQL failure, or 2 if the line would
+	//reduce the stock quantity of a product below 0.
 	//Limitations: columns[] must contain exact matches to the columns of the Product table.
 	//Columns[0] and items[0] must be Prod_ID and the product ID number.
 	int savetodatabase(String columns[], String items[])
@@ -202,7 +204,8 @@ public class StockUpdater extends HttpServlet {
 					}
 					j++;
 				}
-								
+				
+				//do some math to determine what the new stock level is after the changes
 				int newstock = Integer.parseInt(items[stock]) + currentstock;
 			
 				if(newstock < 0)
@@ -216,12 +219,12 @@ public class StockUpdater extends HttpServlet {
 					builtstatement = "update " + Connection.PRODUCT_TABLE_NAME + " set " + columns[stock] + " = '" 
 							  + newstock + "', " + columns[price] + " = '" 
 							  + items[price] + "' where " + columns[0] + " = " + items[0];
-				}
+				} //end else
 								
-			}
+			} //end if
 			else
 			{
-				//insert a new product row
+				//insert a new product row if no match for the product ID
 				builtstatement = "insert into " + Connection.PRODUCT_TABLE_NAME + " (" + columns[0] + ", " + columns[1]
 						  + ", " + columns[2] + ", " + columns[3] + ", " + columns[4]
 						  + ", " + columns[5] + ", " + columns[6] + ", " + columns[7]
